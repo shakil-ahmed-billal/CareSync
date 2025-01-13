@@ -11,17 +11,18 @@ import {
     NavbarLink,
     NavbarToggle,
 } from "flowbite-react";
+import { NavLink } from "react-router-dom";
 
 
 const Header = () => {
     return (
         <div>
-            <Navbar fluid rounded>
+            <Navbar className="sticky top-0 w-full z-50 dark:bg-dark2 text-text1" fluid >
                 <NavbarBrand href="">
-                    <img src="logo.png" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
+                    <img src="logo.png" className="mr-3 md:ml-12 h-10 sm:h-9 lg:h-12" alt="Flowbite React Logo" />
                     <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">CareSync</span>
                 </NavbarBrand>
-                <div className="flex md:order-2">
+                <div className="flex md:order-2 md:mr-12">
                     <DarkThemeToggle />
                     <Dropdown
                         arrowIcon={false}
@@ -41,13 +42,10 @@ const Header = () => {
                     <NavbarToggle />
                 </div>
                 <NavbarCollapse>
-                    <NavbarLink href="#" active>
-                        Home
-                    </NavbarLink>
-                    <NavbarLink href="#">About</NavbarLink>
-                    <NavbarLink href="#">Services</NavbarLink>
-                    <NavbarLink href="#">Pricing</NavbarLink>
-                    <NavbarLink href="#">Contact</NavbarLink>
+                    <NavbarLink ><NavLink to={'/'}>Home</NavLink></NavbarLink>
+                    <NavbarLink ><NavLink to={'/all-camps'}>Available Camps</NavLink></NavbarLink>
+                    <NavbarLink ><NavLink to={'/dashboard'}>Dashboard</NavLink></NavbarLink>
+                    <NavbarLink ><NavLink to={'/auth/login'}>Join Us</NavLink></NavbarLink>
                 </NavbarCollapse>
             </Navbar>
         </div>

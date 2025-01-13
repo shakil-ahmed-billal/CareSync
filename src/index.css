@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* only chrome browser ---------------- */
+body::-webkit-scrollbar { display: none; }
+
+.active{
+    @apply text-text1;
+}
