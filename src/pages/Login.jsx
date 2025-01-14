@@ -3,11 +3,20 @@ import { Link } from "react-router-dom";
 import logo from '../assets/banner-log.jpg';
 import useAuth from "../hooks/useAuth";
 import { House } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
 
-    const { loading, signInPopup } = useAuth()
+    const { signInPopup , loginUser } = useAuth()
 
+    const { register, handleSubmit, formState: { errors } } = useForm()
+    
+    const onSubmit = (data) =>{
+        console.log(data)
+
+        // user login function
+        
+    }
     return (
         <div className=" min-h-screen relative">
             <Link to={'/'}><p className="absolute flex dark:text-light2 top-10 md:left-48"><House />-Back to Home</p></Link>
@@ -33,9 +42,10 @@ const Login = () => {
                             <p className="text-base text-gray-600 dark:text-white"> or </p>
                             <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
                         </div>
-                        <form className="dark:text-light2">
+                        <form onSubmit={handleSubmit(onSubmit)} className="dark:text-light2">
                             <p className="mb-2">Email</p>
                             <TextInput
+                                {...register('email')}
                                 variant="auth"
                                 extra="mb-3"
                                 label="Email*"
@@ -46,6 +56,7 @@ const Login = () => {
 
                             <p className="my-2">Password</p>
                             <TextInput
+                                {...register('password')}
                                 variant="auth"
                                 extra="mb-3"
                                 label="Password*"

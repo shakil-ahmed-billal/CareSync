@@ -1,25 +1,27 @@
 import { Checkbox, TextInput } from "flowbite-react";
 import { House, UserRoundPen } from "lucide-react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { imageUpload } from "../API/ImageAPI";
 import logo from '../assets/banner-log.jpg';
 import useAuth from "../hooks/useAuth";
 
+
 const Register = () => {
 
-  const { loading, signInPopup } = useAuth()
+  const { signInPopup, createNewUser, userProfile } = useAuth()
+  const { register, handleSubmit, formState: { errors } } = useForm()
+  const [imageLink, setImageLink] = useState("");
+  const [image, setImage] = useState(null)
+
 
 
   // user image profile function
-  const [imageLink, setImageLink] = useState("");
-
-  const handleUploadImageClick = () => {
-    document.getElementById("image").click();
-  };
-
   const handleFileChange = (e) => {
     e.preventDefault();
-    const file = event.target.files[0];
+    const file = e.target.files[0];
+    setImage(file)
     if (file) {
       const imageURL = URL.createObjectURL(file);
       setImageLink(imageURL);
@@ -28,7 +30,29 @@ const Register = () => {
 
 
   // user form control function
-  
+  const onSubmit = async (data) => {
+
+    const imageFile = image
+    const imageURL = await imageUpload(imageFile)
+
+    console.log(imageURL)
+    console.log(data)
+
+    // create a new user or register user
+    createNewUser(data.email, data.password)
+      .then(res => {
+        console.log("user profile create success", res)
+
+        // user profile  update section
+        userProfile({ displayName: data.name, photoURL: imageURL })
+          .then(res => {
+            console.log('user profile update', res)
+          })
+
+      }).catch(error => {
+        console.log(error)
+      })
+  }
 
   return (
     <div className=" min-h-screen relative">
@@ -59,45 +83,53 @@ const Register = () => {
               <p className="text-base text-gray-600 dark:text-white"> or </p>
               <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
             </div>
-            <form  className="dark:text-light2">
-              {/* yser profile image section */}
-              <div className="text-center flex items-center justify-center gap-5">
-                <input
-                  type="file"
-                  name="image"
-                  id="fourthImage"
-                  className="hidden"
-                  onChange={handleFileChange} />
-                <div className="w-[100px] h-[100px] rounded-full border border-[#e5eaf2] flex items-center justify-center">
-                  {imageLink === "" ? (
-                    <UserRoundPen className="size-14 text-[#e5eaf2]" />
-                  ) : (
-                    <img
-                      src={imageLink}
-                      alt="image"
-                      className="w-full h-full object-cover rounded-full"
-                    />
-                  )}
-                </div>
-
-                <div className="">
-                <button className="px-4 py-2 bg-[#3B9DF8] text-white rounded-md mt-5"
-                  onClick={handleUploadImageClick}> Upload profile </button>
-                </div>
+            {/* yser profile image section */}
+            <div className=" text-center dark:text-light2 flex flex-row-reverse justify-center items-center gap-3">
+              <input
+                type="file"
+                name="image"
+                id="fourthImage"
+                className="w-28"
+                onChange={handleFileChange} />
+              <div className="w-[100px] h-[100px] rounded-full border border-[#e5eaf2] flex items-center justify-center">
+                {!imageLink ? (
+                  <UserRoundPen className="size-10 text-[#e5eaf2]" />
+                ) : (
+                  <img
+                    src={imageLink}
+                    alt="image"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                )}
               </div>
-              {/* yser profile image section */}
+            </div>
+            {/* yser profile image section */}
+            <form onSubmit={handleSubmit(onSubmit)} className="dark:text-light2">
+
+              <p className="mb-2">Name</p>
+              <TextInput
+                {...register('name')}
+                variant="auth"
+                extra="mb-3"
+                label="name*"
+                placeholder="Full Name write"
+                id="name"
+                type="text"
+              />
               <p className="mb-2">Email</p>
               <TextInput
+                {...register('email')}
                 variant="auth"
                 extra="mb-3"
                 label="Email*"
                 placeholder="mail@simmmple.com"
                 id="email"
-                type="text"
+                type="email"
               />
 
               <p className="my-2">Password</p>
               <TextInput
+                {...register('password')}
                 variant="auth"
                 extra="mb-3"
                 label="Password*"
@@ -107,21 +139,15 @@ const Register = () => {
               />
               {/* Checkbox */}
               <div className="mb-4 flex items-center justify-between px-2">
-                <div className="flex items-center">
+                <div className="mt-3 gap-4 flex items-center">
                   <Checkbox />
-                  <p className="ml-2 text-sm font-medium text-navy-700 dark:text-white">
+                  <p className=" text-sm font-medium text-navy-700 dark:text-white">
                     Keep me logged In
                   </p>
                 </div>
-                <a
-                  className="text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white my-3"
-                  href=" "
-                >
-                  Forgot Password?
-                </a>
               </div>
               <button className="linear w-full rounded-xl bg-brand-500 py-[12px] text-base font-medium text-white transition duration-200 bg-[#3311DB]">
-                Sign In
+                Register
               </button>
             </form>
             <div className="my-4 mt-5">
