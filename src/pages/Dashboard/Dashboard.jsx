@@ -3,16 +3,15 @@ import { Menu } from 'lucide-react';
 import { useState } from "react";
 import {
     HiChartPie,
-    HiClipboard,
     HiCollection,
     HiInformationCircle,
     HiLogin,
     HiPencil,
     HiSearch,
     HiShoppingBag,
-    HiUsers,
+    HiUsers
 } from "react-icons/hi";
-import { Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 
 
 
@@ -25,7 +24,7 @@ const Dashboard = () => {
         <div className="h-[300px] max-h-[300px]">
             <div className="flex flex-col relative">
                 <div className="">
-                    <Button className="mt-5 absolute" onClick={() => setIsOpen(true)}><Menu /></Button>
+                    <Button className="mt-5 fixed z-50" onClick={() => setIsOpen(true)}><Menu /></Button>
                 </div>
                 <div className="">
                     <Outlet></Outlet>
@@ -45,21 +44,28 @@ const Dashboard = () => {
                                 </form>
                                 <Sidebar.Items>
                                     <Sidebar.ItemGroup>
-                                        <Sidebar.Item href="/" icon={HiChartPie}>
-                                            Organizer Profile
-                                        </Sidebar.Item>
-                                        <Sidebar.Item href="/e-commerce/products" icon={HiShoppingBag}>
-                                            Add Camp
-                                        </Sidebar.Item>
-                                        <Sidebar.Item href="/users/list" icon={HiUsers}>
-                                            Manage Camp
-                                        </Sidebar.Item>
-                                        <Sidebar.Item href="/authentication/sign-in" icon={HiLogin}>
-                                            Manage Register Camp
-                                        </Sidebar.Item>
-                                        <Sidebar.Item href="/authentication/sign-up" icon={HiPencil}>
-                                            User Manage
-                                        </Sidebar.Item>
+                                        <NavLink to={'/dashboard/profile'}>
+                                            <Sidebar.Item icon={HiChartPie}>
+                                                Organizer Profile
+                                            </Sidebar.Item>
+                                        </NavLink>
+                                        <NavLink to={'/dashboard/add-camp'}>
+                                            <Sidebar.Item icon={HiChartPie}>
+                                                Add a Camp
+                                            </Sidebar.Item>
+                                        </NavLink>
+                                        <NavLink to={'/dashboard/'}>
+                                            <Sidebar.Item icon={HiChartPie}>
+                                                Manage Camps
+                                            </Sidebar.Item>
+                                        </NavLink>
+                                        <NavLink to={'/dashboard/'}>
+                                            <Sidebar.Item icon={HiChartPie}>
+                                                Manage Register Camps
+                                            </Sidebar.Item>
+                                        </NavLink>
+                                        
+                                        
                                     </Sidebar.ItemGroup>
                                     <Sidebar.ItemGroup>
                                         <Sidebar.Item href="https://flowbite-react.com/" icon={HiCollection}>

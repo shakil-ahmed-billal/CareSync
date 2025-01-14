@@ -15,7 +15,12 @@ const Login = () => {
         console.log(data)
 
         // user login function
-        
+        loginUser(data.email , data.password)
+        .then(res =>{
+            console.log(res.user)
+        }).catch(error =>{
+            console.log(error)
+        })
     }
     return (
         <div className=" min-h-screen relative">
