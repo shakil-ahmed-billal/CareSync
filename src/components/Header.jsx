@@ -13,7 +13,7 @@ import {
 } from "flowbite-react";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-
+import logo from '../assets/logo.png'
 
 const Header = () => {
 
@@ -24,7 +24,7 @@ const Header = () => {
         <div>
             <Navbar className="sticky top-0 w-full z-50 dark:bg-dark2 text-text1" fluid >
                 <NavbarBrand href="">
-                    <img src="logo.png" className="mr-3 md:ml-12 h-10 sm:h-9 lg:h-12" alt="Flowbite React Logo" />
+                    <img src={logo} className="mr-3 md:ml-12 h-10 sm:h-9 lg:h-12" alt="" />
                     <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">CareSync</span>
                 </NavbarBrand>
                 <div className="flex md:order-2 md:mr-12 gap-5">

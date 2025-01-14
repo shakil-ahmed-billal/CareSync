@@ -1,21 +1,29 @@
 import { Button, Checkbox, Label, Textarea, TextInput } from "flowbite-react";
 import { Cloud } from "lucide-react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { imageUpload } from "../../../API/ImageAPI";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const AddCamp = () => {
 
 
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
 
     // camp image manage function section
     const [selectedImage, setSelectedImage] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [isDragging, setIsDragging] = useState(false);
+    const [image, setImage] = useState(null)
+    const axiosPublic = useAxiosPublic()
+
 
     // Handle file selection when dropped or clicked
     const handleFileDrop = (e) => {
         e.preventDefault();
         const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+        setImage(file)
         handleFile(file);
         setIsDragging(false)
     };
@@ -49,12 +57,24 @@ const AddCamp = () => {
     };
     // camp image manage function section
 
-    // camp add for database
-    const onSubmit = (data) => {
-        console.log(data)
-    }
-    const handleSubmit = () => {
 
+
+    // camp add for database
+    const onSubmit = async (data) => {
+
+        // camp image upload api call
+        const imageURL = await imageUpload(image)
+
+        if (imageURL) {
+            const campData = {
+                ...data,
+                image: imageURL,
+                postTime: new Date(),
+                participantCount: 0,
+            }
+            const { data: result } = await axiosPublic.post('/add-camp', campData)
+            console.log(result)
+        }
     }
 
     return (
@@ -126,7 +146,7 @@ const AddCamp = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                         <Label>Camp Name</Label>
                         <TextInput
-                            // {...register('camp-name')}
+                            {...register('campName')}
                             extra="mb-3"
                             label="camp-name*"
                             placeholder="Camp Name"
@@ -134,18 +154,18 @@ const AddCamp = () => {
                             type="text" />
                         <Label>Healthcare Professional Name</Label>
                         <TextInput
-                            // {...register('')}
+                            {...register('healthcareName')}
                             variant="auth"
                             extra="mb-3"
                             label="Healthcare Name*"
                             placeholder="Healthcare Professional Name"
                             id="healthcareName"
                             type="text" />
-                        <div className="flex justify-between gap-10">
+                        <div className="flex justify-between gap-5">
                             <div className="flex flex-col w-full">
                                 <Label>Camp Fees </Label>
                                 <input
-                                    // {...register('')}
+                                    {...register('campFee')}
                                     placeholder="Camp Fee"
                                     id="fee"
                                     type="number"
@@ -153,17 +173,25 @@ const AddCamp = () => {
                                 />
                             </div>
                             <div className="flex flex-col w-full">
-                                <Label>Date & Time</Label>
+                                <Label>Date</Label>
                                 <input
-                                    // {...register('')}
+                                    {...register('date')}
                                     placeholder="Date or Time"
                                     id="date"
                                     type="date" />
                             </div>
+                            <div className="flex flex-col w-full">
+                                <Label>Time</Label>
+                                <input
+                                    {...register('time')}
+                                    placeholder="Date or Time"
+                                    id="time"
+                                    type="time" />
+                            </div>
                         </div>
                         <Label>Camp Location</Label>
                         <TextInput
-                            // {...register('')}
+                            {...register('campLocation')}
                             variant="auth"
                             extra="mb-3"
                             label="location*"
@@ -172,15 +200,16 @@ const AddCamp = () => {
                             type="text" />
                         <Label>Description</Label>
                         <Textarea rows={5}
-                        placeholder="Describe Your Project Plan ......"
-                        className="" />
+                            {...register('description')}
+                            placeholder="Describe Your Project Plan ......"
+                            className="" />
                         <div className="flex items-center">
                             <Checkbox />
                             <p className="ml-2 text-sm font-medium text-navy-700 dark:text-white">
                                 Keep me logged In
                             </p>
                         </div>
-                        <Button className="w-full">Add Camp</Button>
+                        <button><Button className="w-full">Add Camp</Button></button>
                     </form>
                 </div>
             </div>

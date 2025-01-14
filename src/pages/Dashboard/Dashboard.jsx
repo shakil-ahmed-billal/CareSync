@@ -11,7 +11,7 @@ import {
     HiShoppingBag,
     HiUsers
 } from "react-icons/hi";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 
 
