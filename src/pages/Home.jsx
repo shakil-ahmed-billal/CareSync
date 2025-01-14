@@ -1,8 +1,10 @@
+import Slider from "../components/Slider"
+
 
 const Home = () => {
   return (
     <div>
-      <p className="text-text1">Home page</p>
+      <Slider></Slider>
     </div>
   )
 }
