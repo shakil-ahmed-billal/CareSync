@@ -21,7 +21,7 @@ const Details = () => {
     const axiosPublic = useAxiosPublic()
 
 
-    const { data: details } = useQuery({
+    const { data: details , refetch } = useQuery({
         queryKey: ['camp-details'],
         queryFn: async () => {
             const { data } = await axiosPublic(`/camp/${id}`)
@@ -66,6 +66,9 @@ const Details = () => {
         
         const {data} = await axiosPublic.post('/register' , info)
         console.log(data)
+        if(data){
+            refetch()
+        }
     }
 
     return (
