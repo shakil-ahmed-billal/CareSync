@@ -4,13 +4,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { imageUpload } from "../API/ImageAPI";
+import saveUser from "../API/UserSave";
 import logo from '../assets/banner-log.jpg';
+import GoogleProvider from "../components/SocialLogin/GoogleProvider";
 import useAuth from "../hooks/useAuth";
 
 
 const Register = () => {
 
-  const { signInPopup, createNewUser, userProfile } = useAuth()
+  const { createNewUser, userProfile } = useAuth()
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [imageLink, setImageLink] = useState("");
   const [image, setImage] = useState(null)
@@ -38,20 +40,18 @@ const Register = () => {
     console.log(imageURL)
     console.log(data)
 
-    // create a new user or register user
-    createNewUser(data.email, data.password)
-      .then(res => {
-        console.log("user profile create success", res)
 
-        // user profile  update section
-        userProfile({ displayName: data.name, photoURL: imageURL })
-          .then(res => {
-            console.log('user profile update', res)
-          })
+    try {
+      // new user create firebase 
+      const result = await createNewUser(data.email, data.password)
+      // user profile update info
+      await userProfile({ displayName: data.name, photoURL: imageURL })
+      // user save database
+      await saveUser({ ...result?.user, name: data.name, photoURL: imageURL })
 
-      }).catch(error => {
-        console.log(error)
-      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -72,12 +72,7 @@ const Register = () => {
             <p className="py-3 text-base dark:text-light2 text-gray-600">
               Enter your email and password to register account!
             </p>
-            <button onClick={() => signInPopup()}
-              className="border w-full justify-center border-[#e5eaf2] rounded-md py-2 px-4 flex items-center gap-[10px] text-[1rem] dark:text-light3 text-[#424242] hover:bg-gray-50 transition-all duration-200 hover:dark:text-black">
-              <img src="https://i.ibb.co/dQMmB8h/download-4-removebg-preview-1.png" alt="google logo"
-                className="w-[23px]" />
-              Sign in with Google
-            </button>
+            <GoogleProvider></GoogleProvider>
             <div className="mb-6 flex items-center  gap-3">
               <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
               <p className="text-base text-gray-600 dark:text-white"> or </p>

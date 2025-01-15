@@ -15,14 +15,10 @@ const AvailableCamps = () => {
     })
     console.log(data)
     return (
-        <div className="dark:text-light2">
-            available camps details
-            <div className="grid grid-cols-4 gap-5">
-                {data?.map(item => <CampCard key={item._id}></CampCard>)}
-                <CampCard></CampCard>
-                <CampCard></CampCard>
-                <CampCard></CampCard>
-                <CampCard></CampCard>
+        <div className="dark:text-light2 py-10">
+            
+            <div className="grid md:grid-cols-4 gap-5">
+                {data?.map(item => <CampCard camp={item} key={item._id}></CampCard>)}
             </div>
         </div>
     )

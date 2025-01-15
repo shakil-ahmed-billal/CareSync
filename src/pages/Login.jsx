@@ -1,26 +1,28 @@
 import { Checkbox, TextInput } from "flowbite-react";
+import { House } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import logo from '../assets/banner-log.jpg';
 import useAuth from "../hooks/useAuth";
-import { House } from "lucide-react";
-import { useForm } from "react-hook-form";
+import GoogleProvider from "../components/SocialLogin/GoogleProvider";
+
 
 const Login = () => {
 
-    const { signInPopup , loginUser } = useAuth()
+    const { loginUser } = useAuth()
 
     const { register, handleSubmit, formState: { errors } } = useForm()
-    
-    const onSubmit = (data) =>{
+
+    const onSubmit = (data) => {
         console.log(data)
 
         // user login function
-        loginUser(data.email , data.password)
-        .then(res =>{
-            console.log(res.user)
-        }).catch(error =>{
-            console.log(error)
-        })
+        loginUser(data.email, data.password)
+            .then(async (res) => {
+                console.log(res.user)
+            }).catch(error => {
+                console.log(error)
+            })
     }
     return (
         <div className=" min-h-screen relative">
@@ -36,12 +38,7 @@ const Login = () => {
                         <p className="py-3 text-base dark:text-light2 text-gray-600">
                             Enter your email and password to sign in!
                         </p>
-                        <button onClick={() => signInPopup()}
-                            className="border w-full justify-center border-[#e5eaf2] rounded-md py-2 px-4 flex items-center gap-[10px] text-[1rem] dark:text-light3 text-[#424242] hover:bg-gray-50 transition-all duration-200 hover:dark:text-black">
-                            <img src="https://i.ibb.co/dQMmB8h/download-4-removebg-preview-1.png" alt="google logo"
-                                className="w-[23px]" />
-                            Sign in with Google
-                        </button>
+                        <GoogleProvider></GoogleProvider>
                         <div className="mb-6 flex items-center  gap-3">
                             <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
                             <p className="text-base text-gray-600 dark:text-white"> or </p>
