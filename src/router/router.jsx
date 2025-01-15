@@ -8,6 +8,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import AddCamp from "../pages/Dashboard/AddCamp/AddCamp";
 import AvailableCamps from "../pages/AllCamps/AvailableCamps";
 import Details from "../pages/AllCamps/Details";
+import RegisterCamp from "../pages/Participant/RegisterCamp";
 
 const router = createBrowserRouter([
     {
@@ -33,7 +34,12 @@ const router = createBrowserRouter([
                     {
                         path: '/dashboard/add-camp',
                         element: <AddCamp></AddCamp>
-                    }
+                    },
+                    // participant dashboard section 
+                    {
+                        path: '/dashboard/register-camp',
+                        element: <RegisterCamp></RegisterCamp>
+                    },
                 ]
             }
         ]
