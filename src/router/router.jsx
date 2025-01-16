@@ -26,7 +26,8 @@ const router = createBrowserRouter([
             },
             {
                 path: '/all-camps',
-                element: <AvailableCamps></AvailableCamps>
+                element: <AvailableCamps></AvailableCamps>,
+                loader: ()=> fetch(`${import.meta.env.VITE_SERVER_URL}/camp-count`)
             },
             {
                 path: '/camp/:id',

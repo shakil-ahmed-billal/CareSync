@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import useAxiosPublic from "./useAxiosPublic"
 
-const useCamps = () => {
+const useCamps = ({currentPage , itemPerPage}) => {
     const axiosPublic = useAxiosPublic()
 
+    console.log(currentPage , itemPerPage)
     const { data: camps = [] } = useQuery({
-        queryKey: ['all-camps'],
+        queryKey: ['all-camps' , currentPage , itemPerPage],
         queryFn: async () => {
-            const { data } = await axiosPublic('/all-camps')
+            const { data } = await axiosPublic(`/all-camps?page=${currentPage}&size=${itemPerPage}`)
             return data
         }
     })
