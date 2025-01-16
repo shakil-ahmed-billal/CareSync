@@ -176,8 +176,8 @@ const Details = () => {
             {/* modal section */}
             <>
                 <Modal className="" show={openModal} size="2xl" onClose={onCloseModal} popup>
-                    <Modal.Header className="bg-dark1" />
-                    <Modal.Body className="bg-dark1">
+                    <Modal.Header className="dark:bg-dark1" />
+                    <Modal.Body className="dark:bg-dark1">
                         <div className="p-2 ">
                             <div className="grid grid-cols-2 gap-5 dark:text-light2">
                                 <div className="">
@@ -195,25 +195,25 @@ const Details = () => {
                                     </div>
                                 </div>
                                 <div className="">
-                                    <form onSubmit={handleRegister} className="w-full space-y-2">
+                                    <form onSubmit={handleRegister} className="w-full space-y-2 ">
                                         <Label>Age</Label>
                                         <input
                                             // {...register('age')}
-                                            className="w-full rounded-md bg-dark3"
+                                            className="w-full rounded-md bg-light3 dark:bg-dark3"
                                             type="number"
                                             placeholder="age"
                                             name="age" id="" />
                                         <Label>Phone Number</Label>
                                         <input
                                             // {...register('phone')}
-                                            className="w-full rounded-md bg-dark3"
+                                            className="w-full rounded-md bg-light3 dark:bg-dark3"
                                             type="number"
                                             placeholder="Phone Number"
                                             name="phoneNumber" id="phone" />
                                         <Label>Your Gender</Label>
                                         <select
                                             // {...register('gender')}
-                                            className="w-full rounded-md bg-dark3"
+                                            className="w-full rounded-md bg-light3 dark:bg-dark3"
                                             defaultValue=''
                                             name="gender" id="gender">
                                             <option disabled selected value="">Gender
@@ -226,7 +226,7 @@ const Details = () => {
                                         <Label>Emergency Contact Information</Label>
                                         <textarea
                                             // {...register('emergencyContact')}
-                                            className="w-full rounded-md bg-dark3"
+                                            className="w-full rounded-md bg-light3  dark:bg-dark3"
                                             name="emergencyContact" placeholder="Emergency Contact" id=""></textarea>
                                         <button><Button>Save Info</Button></button>
                                     </form>

@@ -1,27 +1,31 @@
-import { Table } from "flowbite-react"
-import {useQuery} from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
+import { Table, TableCell, TableRow } from "flowbite-react"
 import useAuth from "../../hooks/useAuth"
 import useAxiosPublic from "../../hooks/useAxiosPublic"
-import { Banknote, CircleX } from 'lucide-react'
+import RegisterRow from './RegisterRow'
+
+
 
 const RegisterCamp = () => {
 
-    const {user} = useAuth()
+    const { user } = useAuth()
     const axiosPublic = useAxiosPublic()
 
-    const {data: registerCamp} = useQuery({
-        queryKey: ['register:email' , user?.email],
-        queryFn: async () =>{
-            const {data} = await axiosPublic.get(`/registerCamp/${user?.email}`)
+    const { data: registerCamp, refetch } = useQuery({
+        queryKey: ['register:email', user?.email],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get(`/registerCamp/${user?.email}`)
             return data
         }
     })
+
+
 
     console.log(registerCamp)
     return (
         <div className="mt-20">
             <div className="overflow-x-auto">
-                <Table hoverable>
+                <Table >
                     <Table.Head>
                         <Table.HeadCell>Camp name</Table.HeadCell>
                         <Table.HeadCell>Camp Fee</Table.HeadCell>
@@ -32,17 +36,7 @@ const RegisterCamp = () => {
                         <Table.HeadCell>Feedback</Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {registerCamp?.map(item => <Table.Row key={item._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                {item?.campName}
-                            </Table.Cell>
-                            <Table.Cell>$ {item?.campFee}</Table.Cell>
-                            <Table.Cell>{item?.participantName}</Table.Cell>
-                            <Table.Cell>{item?.paymentStatus === "paid"? "Paid": <p className="flex items-center gap-1"><Banknote />Pay</p>}</Table.Cell>
-                            <Table.Cell>{item?.confirmationStatus}</Table.Cell>
-                            <Table.Cell><CircleX className="text-red-500" /></Table.Cell>
-                            <Table.Cell>{item?.feedback}</Table.Cell>
-                        </Table.Row>)}
+                        {registerCamp?.map(item => <RegisterRow key={item._id} item={item} refetch={refetch}></RegisterRow>)}
                     </Table.Body>
                 </Table>
             </div>
