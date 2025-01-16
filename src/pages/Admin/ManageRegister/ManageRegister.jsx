@@ -1,0 +1,48 @@
+import { useQuery } from "@tanstack/react-query";
+import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { BadgeCheck, Ban, ShieldCheck } from "lucide-react";
+
+const ManageRegister = () => {
+
+  const axiosPublic = useAxiosPublic()
+
+  const {data: registerCamp = []}  =useQuery({
+    queryKey: ['manage-register'],
+    queryFn: async()=>{
+      const {data} = await axiosPublic('/manage-register')
+      return data
+    }
+  })
+
+  return (
+    <div>
+      <div className="overflow-x-auto mt-20">
+        <Table>
+          <TableHead>
+            <TableHeadCell>Camp Name</TableHeadCell>
+            <TableHeadCell>Camp Fee</TableHeadCell>
+            <TableHeadCell>Participant Name</TableHeadCell>
+            <TableHeadCell>Payment Status</TableHeadCell>
+            <TableHeadCell>Confirmation Status</TableHeadCell>
+            <TableHeadCell>Action Button</TableHeadCell>
+          </TableHead>
+          <TableBody className="divide-y">
+            {registerCamp.map(item => <TableRow key={item._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <TableCell>{item?.campName}</TableCell>
+              <TableCell>$ {item?.campFee}</TableCell>
+              <TableCell>{item?.participantName}</TableCell>
+              <TableCell>{item?.paymentStatus === "Paid"? <p className="flex items-center gap-1"><BadgeCheck className="text-green-400"/> Paid</p>: 'Unpaid'}</TableCell>
+              <TableCell>{item?.confirmationStatus}</TableCell>
+              <TableCell>
+                {item?.paymentStatus === "Paid"? <Ban className="text-rose-500" /> : <ShieldCheck className="text-green-500" />}
+              </TableCell>
+            </TableRow>)}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  )
+}
+
+export default ManageRegister

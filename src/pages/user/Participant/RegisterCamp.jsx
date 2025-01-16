@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { Table, TableCell, TableRow } from "flowbite-react"
-import useAuth from "../../hooks/useAuth"
-import useAxiosPublic from "../../hooks/useAxiosPublic"
+import { Table } from "flowbite-react"
 import RegisterRow from './RegisterRow'
+import useAuth from '../../../hooks/useAuth'
+import useAxiosPublic from '../../../hooks/useAxiosPublic'
 
 
 

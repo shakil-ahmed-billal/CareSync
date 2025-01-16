@@ -66,8 +66,8 @@ const Dashboard = () => {
                                                 </Sidebar.Item>
                                             </NavLink>
                                         </Sidebar.ItemGroup>
-                                        : <Sidebar.ItemGroup>
-                                            <NavLink to={'/dashboard/profile'}>
+                                        : <Sidebar.ItemGroup> 
+                                            <NavLink to={'/dashboard/organizerProfile'}>
                                                 <Sidebar.Item icon={HiChartPie}>
                                                     Organizer Profile
                                                 </Sidebar.Item>
@@ -77,12 +77,12 @@ const Dashboard = () => {
                                                     Add a Camp
                                                 </Sidebar.Item>
                                             </NavLink>
-                                            <NavLink to={'/dashboard/'}>
+                                            <NavLink to={'/dashboard/manage-camp'}>
                                                 <Sidebar.Item icon={HiChartPie}>
                                                     Manage Camps
                                                 </Sidebar.Item>
                                             </NavLink>
-                                            <NavLink to={'/dashboard/'}>
+                                            <NavLink to={'/dashboard/manage-registered'}>
                                                 <Sidebar.Item icon={HiChartPie}>
                                                     Manage Register Camps
                                                 </Sidebar.Item>

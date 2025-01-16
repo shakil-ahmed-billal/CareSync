@@ -3,13 +3,17 @@ import Auth from "../Authentication/Auth/Auth";
 import MainLayout from "../layout/MainLayout";
 import AvailableCamps from "../pages/AllCamps/AvailableCamps";
 import Details from "../pages/AllCamps/Details";
-import AddCamp from "../pages/Dashboard/AddCamp/AddCamp";
+
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import RegisterCamp from "../pages/Participant/RegisterCamp";
 import Register from "../pages/Register";
 import PaymentHistory from "../components/Payment/PaymentHistory";
+import AddCamp from "../pages/Admin/AddCamp/AddCamp";
+import RegisterCamp from "../pages/user/Participant/RegisterCamp";
+import OrganizerProfile from "../pages/Admin/Profile/OrganizerProfile";
+import ManageCamp from "../pages/Admin/ManageCamp/ManageCamp";
+import ManageRegister from "../pages/Admin/ManageRegister/ManageRegister";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +39,19 @@ const router = createBrowserRouter([
                     {
                         path: '/dashboard/add-camp',
                         element: <AddCamp></AddCamp>
+                    },
+                    // Organizer dashboard section
+                    {
+                        path: '/dashboard/organizerProfile',
+                        element: <OrganizerProfile></OrganizerProfile>
+                    },
+                    {
+                        path: '/dashboard/manage-camp',
+                        element: <ManageCamp></ManageCamp>
+                    },
+                    {
+                        path: '/dashboard/manage-registered',
+                        element: <ManageRegister></ManageRegister>
                     },
                     // participant dashboard section 
                     {

@@ -1,8 +1,8 @@
 import { Modal, Table } from "flowbite-react";
 import { Banknote, CircleX } from "lucide-react";
 import { useState } from "react";
-import StripePayment from "../../components/Payment/StripePayment";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import StripePayment from "../../../components/Payment/StripePayment";
 
 
 
