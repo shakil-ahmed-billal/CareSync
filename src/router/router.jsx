@@ -1,14 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "../layout/MainLayout";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
 import Auth from "../Authentication/Auth/Auth";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import AddCamp from "../pages/Dashboard/AddCamp/AddCamp";
+import MainLayout from "../layout/MainLayout";
 import AvailableCamps from "../pages/AllCamps/AvailableCamps";
 import Details from "../pages/AllCamps/Details";
+import AddCamp from "../pages/Dashboard/AddCamp/AddCamp";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Home from "../pages/Home";
+import Login from "../pages/Login";
 import RegisterCamp from "../pages/Participant/RegisterCamp";
+import Register from "../pages/Register";
+import PaymentHistory from "../components/Payment/PaymentHistory";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
                         path: '/dashboard/register-camp',
                         element: <RegisterCamp></RegisterCamp>
                     },
+                    {
+                        path: '/dashboard/payment-history',
+                        element: <PaymentHistory></PaymentHistory>
+                    },
                 ]
             }
         ]
@@ -49,11 +54,11 @@ const router = createBrowserRouter([
         element: <Auth></Auth>,
         children: [
             {
-                path:'/auth/login',
-                element:<Login></Login>
+                path: '/auth/login',
+                element: <Login></Login>
             },
             {
-                path:'/auth/register',
+                path: '/auth/register',
                 element: <Register></Register>
             }
         ]

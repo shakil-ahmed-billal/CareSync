@@ -14,7 +14,7 @@ const CheckoutPayment = ({ item }) => {
 
     console.log(item)
 
-    const { _id, campFee } = item || {}
+    const { _id, campFee , campName } = item || {}
 
     const itemPrice = {
         price: campFee
@@ -79,8 +79,9 @@ const CheckoutPayment = ({ item }) => {
 
                 const paymentInfo = {
                     email: user?.email,
-                    transaction,
+                    transaction: paymentIntent?.id,
                     amount: campFee,
+                    campName: campName,
                     date: new Date(),
                     campId: _id,
                 }

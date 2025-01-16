@@ -60,7 +60,7 @@ const Dashboard = () => {
                                                     Registered Camps
                                                 </Sidebar.Item>
                                             </NavLink>
-                                            <NavLink to={'/dashboard/'}>
+                                            <NavLink to={'/dashboard/payment-history'}>
                                                 <Sidebar.Item icon={HiChartPie}>
                                                     Payment History
                                                 </Sidebar.Item>

@@ -38,7 +38,7 @@ const RegisterRow = ({ item, refetch }) => {
                 </Table.Cell>
                 <Table.Cell>$ {campFee}</Table.Cell>
                 <Table.Cell>{participantName}</Table.Cell>
-                <Table.Cell>{paymentStatus === "paid" ? "Paid" : <p onClick={() => setOpenModal(true)} className="flex items-center gap-1 text-blue-500 cursor-pointer"><Banknote />Pay</p>}</Table.Cell>
+                <Table.Cell>{paymentStatus === "Paid" ? "Paid" : <p onClick={() => setOpenModal(true)} className="flex items-center gap-1 text-blue-500 cursor-pointer"><Banknote />Pay</p>}</Table.Cell>
                 <Table.Cell>{confirmationStatus}</Table.Cell>
                 <Table.Cell><CircleX onClick={() => handleDelete(_id)} className="text-red-500 cursor-pointer" /></Table.Cell>
                 <Table.Cell>{feedback}</Table.Cell>
