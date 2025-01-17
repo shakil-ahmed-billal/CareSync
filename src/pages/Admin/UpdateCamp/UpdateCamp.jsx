@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { imageUpload } from "../../../API/ImageAPI";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
-const AddCamp = () => {
+const UpdateCamp = () => {
 
 
     const { register, handleSubmit, formState: { errors } } = useForm()
@@ -17,7 +19,8 @@ const AddCamp = () => {
     const [isDragging, setIsDragging] = useState(false);
     const [image, setImage] = useState(null)
     const axiosPublic = useAxiosPublic()
-
+    const {id} = useParams()
+    console.log(id)
 
     // Handle file selection when dropped or clicked
     const handleFileDrop = (e) => {
@@ -57,24 +60,31 @@ const AddCamp = () => {
     };
     // camp image manage function section
 
+    const {data:details} = useQuery({
+        queryKey: ['camp-details' , id],
+        queryFn: async()=>{
+            const {data} = await axiosPublic(`/camp/${id}`)
+            return data
+        }
+    })
 
 
     // camp add for database
     const onSubmit = async (data) => {
 
+        console.log(image)
         // camp image upload api call
-        const imageURL = await imageUpload(image)
+        const imageURL = image && await imageUpload(image)
 
-        if (imageURL) {
-            const campData = {
-                ...data,
-                image: imageURL,
-                postTime: new Date(),
-                participantCount: 0,
-            }
-            const { data: result } = await axiosPublic.post('/add-camp', campData)
-            console.log(result)
+        const campData = {
+            ...data,
+            image: imageURL? imageURL: details?.image,
         }
+        const { data: result } = await axiosPublic.patch(`/updateCamp/${id}`, campData)
+        console.log(result)
+        console.log(campData)
+        
+
     }
 
     return (
@@ -151,7 +161,8 @@ const AddCamp = () => {
                             label="camp-name*"
                             placeholder="Camp Name"
                             id="camp-name"
-                            type="text" />
+                            type="text" 
+                            defaultValue={details?.campName}/>
                         <Label>Healthcare Professional Name</Label>
                         <TextInput
                             {...register('healthcareName')}
@@ -160,7 +171,9 @@ const AddCamp = () => {
                             label="Healthcare Name*"
                             placeholder="Healthcare Professional Name"
                             id="healthcareName"
-                            type="text" />
+                            type="text"
+                            defaultValue={details?.healthcareName}
+                            />
                         <div className="md:flex justify-between gap-5">
                             <div className="flex flex-col w-full">
                                 <Label>Camp Fees </Label>
@@ -170,6 +183,7 @@ const AddCamp = () => {
                                     id="fee"
                                     type="number"
                                     className=""
+                                    defaultValue={details?.campFee}
                                 />
                             </div>
                             <div className="flex flex-col w-full">
@@ -178,7 +192,9 @@ const AddCamp = () => {
                                     {...register('date')}
                                     placeholder="Date or Time"
                                     id="date"
-                                    type="date" />
+                                    type="date" 
+                                    defaultValue={details?.date}
+                                    />
                             </div>
                             <div className="flex flex-col w-full">
                                 <Label>Time</Label>
@@ -186,6 +202,7 @@ const AddCamp = () => {
                                     {...register('time')}
                                     placeholder="Date or Time"
                                     id="time"
+                                    defaultValue={details?.time}
                                     type="time" />
                             </div>
                         </div>
@@ -197,19 +214,22 @@ const AddCamp = () => {
                             label="location*"
                             placeholder="Camp Location"
                             id="location"
+                            defaultValue={details?.campLocation}
                             type="text" />
                         <Label>Description</Label>
                         <Textarea rows={5}
                             {...register('description')}
                             placeholder="Describe Your Project Plan ......"
-                            className="" />
+                            className=""
+                            defaultValue={details?.description}
+                            />
                         <div className="flex items-center">
                             <Checkbox />
                             <p className="ml-2 text-sm font-medium text-navy-700 dark:text-white">
                                 Keep me logged In
                             </p>
                         </div>
-                        <button><Button className="w-full">Add Camp</Button></button>
+                        <button><Button className="w-full">Update Camp</Button></button>
                     </form>
                 </div>
             </div>
@@ -217,4 +237,4 @@ const AddCamp = () => {
     )
 }
 
-export default AddCamp
+export default UpdateCamp

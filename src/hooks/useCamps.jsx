@@ -5,14 +5,14 @@ const useCamps = ({currentPage , itemPerPage}) => {
     const axiosPublic = useAxiosPublic()
 
     console.log(currentPage , itemPerPage)
-    const { data: camps = [] } = useQuery({
+    const { data: camps = [] , refetch} = useQuery({
         queryKey: ['all-camps' , currentPage , itemPerPage],
         queryFn: async () => {
             const { data } = await axiosPublic(`/all-camps?page=${currentPage}&size=${itemPerPage}`)
             return data
         }
     })
-    return [camps]
+    return [camps , refetch]
 }
 
 export default useCamps

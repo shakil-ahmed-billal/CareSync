@@ -21,7 +21,7 @@ const PopularSection = () => {
     return (
         <div>
             <p className='text-center text-4xl font-bold my-10'>Most Popular Camp</p>
-            <div className="grid gap-5 grid-cols-4">
+            <div className="grid gap-5 md:grid-cols-4">
                 {popular?.map(item => <CampCard key={item._id} camp={item}></CampCard>)}
             </div>
             <div className="flex justify-center items-center py-10">

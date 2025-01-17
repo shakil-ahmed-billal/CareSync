@@ -22,7 +22,7 @@ const Details = () => {
 
 
     const { data: details , refetch } = useQuery({
-        queryKey: ['camp-details'],
+        queryKey: ['camp-details' , id],
         queryFn: async () => {
             const { data } = await axiosPublic(`/camp/${id}`)
             return data

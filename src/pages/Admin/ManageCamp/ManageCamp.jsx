@@ -1,11 +1,13 @@
 import { Select, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import { Delete, Edit } from "lucide-react";
 import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import useCamps from "../../../hooks/useCamps";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 const ManageCamp = () => {
 
   const { result } = useLoaderData()
+  const axiosPublic = useAxiosPublic()
   const [itemPerPage, setItemPerPage] = useState(8)
   const [currentPage, setCurrentPage] = useState(0)
   const numberOfPages = Math.ceil(result / itemPerPage)
@@ -15,8 +17,15 @@ const ManageCamp = () => {
     setCurrentPage(0)
   }
 
-  const [camps] = useCamps({ currentPage, itemPerPage })
+  const [camps , refetch] = useCamps({ currentPage, itemPerPage })
 
+  const handleDelete = async(id)=>{
+    const {data} = await axiosPublic.delete(`/delete-camp/${id}`)
+    if(data.deletedCount >0){
+      refetch()
+    }
+    console.log(data)
+  } 
 
   return (
     <div>
@@ -27,7 +36,7 @@ const ManageCamp = () => {
             <TableHeadCell>Camp Name</TableHeadCell>
             <TableHeadCell>Date & Time</TableHeadCell>
             <TableHeadCell>Location</TableHeadCell>
-            <TableHeadCell>Healthcare Name</TableHeadCell>
+          <TableHeadCell>Healthcare Name</TableHeadCell>
             <TableHeadCell>Action Button</TableHeadCell>
           </TableHead>
           <TableBody className="divide-y">
@@ -40,8 +49,8 @@ const ManageCamp = () => {
               <TableCell>{item?.campLocation}</TableCell>
               <TableCell>{item?.healthcareName}</TableCell>
               <TableCell className="flex items-center gap-5">
-                <Edit className="text-blue-500"></Edit>
-                <Delete className="text-red-500"></Delete></TableCell>
+                <Link to={`/dashboard/updateCamp/${item?._id}`}><Edit className="text-blue-500"></Edit></Link>
+                <Delete onClick={()=>handleDelete(item?._id)} className="text-red-500 cursor-pointer"></Delete></TableCell>
             </TableRow>)}
           </TableBody>
         </Table>
