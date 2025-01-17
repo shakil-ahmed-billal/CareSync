@@ -15,6 +15,7 @@ import OrganizerProfile from "../pages/Admin/Profile/OrganizerProfile";
 import ManageCamp from "../pages/Admin/ManageCamp/ManageCamp";
 import ManageRegister from "../pages/Admin/ManageRegister/ManageRegister";
 import UpdateCamp from "../pages/Admin/UpdateCamp/UpdateCamp";
+import ErrorPage from "../error/ErrorPage";
 
 const router = createBrowserRouter([
     {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
                 element: <Register></Register>
             }
         ]
+    },
+    {
+        path: '*',
+        element: <ErrorPage></ErrorPage>
     }
 ])
 

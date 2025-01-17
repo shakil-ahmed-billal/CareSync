@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
+import TransactionError from "../../error/TransactionError";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
@@ -21,7 +22,7 @@ const PaymentHistory = () => {
 
     return (
         <div className="overflow-x-auto mt-20">
-            <Table>
+            {history && history[0] ? <Table>
                 <TableHead>
                     <TableHeadCell>Payment Transaction</TableHeadCell>
                     <TableHeadCell>Camp Name</TableHeadCell>
@@ -38,7 +39,7 @@ const PaymentHistory = () => {
                         <TableCell>{item?.confirmationStatus}</TableCell>
                     </TableRow>)}
                 </TableBody>
-            </Table>
+            </Table> : <TransactionError></TransactionError>}
         </div>
     )
 }

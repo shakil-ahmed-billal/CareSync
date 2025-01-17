@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { Table } from "flowbite-react"
-import RegisterRow from './RegisterRow'
+import ResultError from '../../../error/ResultError'
 import useAuth from '../../../hooks/useAuth'
 import useAxiosPublic from '../../../hooks/useAxiosPublic'
+import RegisterRow from './RegisterRow'
 
 
 
@@ -25,7 +26,7 @@ const RegisterCamp = () => {
     return (
         <div className="mt-20">
             <div className="overflow-x-auto">
-                <Table >
+                {registerCamp && registerCamp[0] ? <Table >
                     <Table.Head>
                         <Table.HeadCell>Camp name</Table.HeadCell>
                         <Table.HeadCell>Camp Fee</Table.HeadCell>
@@ -36,9 +37,9 @@ const RegisterCamp = () => {
                         <Table.HeadCell className='text-center'>Feedback</Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {registerCamp?.map(item => <RegisterRow  key={item._id} item={item} refetch={refetch}></RegisterRow>)}
+                        {registerCamp?.map(item => <RegisterRow key={item._id} item={item} refetch={refetch}></RegisterRow>)}
                     </Table.Body>
-                </Table>
+                </Table> : <ResultError></ResultError>}
             </div>
         </div>
     )
