@@ -17,8 +17,9 @@ const Dashboard = () => {
     const [isOpen, setIsOpen] = useState(true);
     const handleClose = () => setIsOpen(false);
 
-    const { admin } = useAdmin()
+    const [admin] = useAdmin()
 
+    console.log(admin)
 
     return (
         <div className="h-[300px] max-h-[300px]">
@@ -66,7 +67,7 @@ const Dashboard = () => {
                                                 </Sidebar.Item>
                                             </NavLink>
                                         </Sidebar.ItemGroup>
-                                        : <Sidebar.ItemGroup> 
+                                        : <Sidebar.ItemGroup>
                                             <NavLink to={'/dashboard/organizerProfile'}>
                                                 <Sidebar.Item icon={HiChartPie}>
                                                     Organizer Profile

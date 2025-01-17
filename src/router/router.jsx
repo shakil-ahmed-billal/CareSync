@@ -4,18 +4,20 @@ import MainLayout from "../layout/MainLayout";
 import AvailableCamps from "../pages/AllCamps/AvailableCamps";
 import Details from "../pages/AllCamps/Details";
 
+import PaymentHistory from "../components/Payment/PaymentHistory";
+import ErrorPage from "../error/ErrorPage";
+import AddCamp from "../pages/Admin/AddCamp/AddCamp";
+import ManageCamp from "../pages/Admin/ManageCamp/ManageCamp";
+import ManageRegister from "../pages/Admin/ManageRegister/ManageRegister";
+import OrganizerProfile from "../pages/Admin/Profile/OrganizerProfile";
+import UpdateCamp from "../pages/Admin/UpdateCamp/UpdateCamp";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import PaymentHistory from "../components/Payment/PaymentHistory";
-import AddCamp from "../pages/Admin/AddCamp/AddCamp";
 import RegisterCamp from "../pages/user/Participant/RegisterCamp";
-import OrganizerProfile from "../pages/Admin/Profile/OrganizerProfile";
-import ManageCamp from "../pages/Admin/ManageCamp/ManageCamp";
-import ManageRegister from "../pages/Admin/ManageRegister/ManageRegister";
-import UpdateCamp from "../pages/Admin/UpdateCamp/UpdateCamp";
-import ErrorPage from "../error/ErrorPage";
+import AdminRoute from "../private/AdminRoute";
+import PrivateRoute from "../private/PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -29,7 +31,7 @@ const router = createBrowserRouter([
             {
                 path: '/all-camps',
                 element: <AvailableCamps></AvailableCamps>,
-                loader: ()=> fetch(`${import.meta.env.VITE_SERVER_URL}/camp-count`)
+                loader: () => fetch(`${import.meta.env.VITE_SERVER_URL}/camp-count`)
             },
             {
                 path: '/camp/:id',
@@ -39,36 +41,36 @@ const router = createBrowserRouter([
                 path: '/dashboard',
                 element: <Dashboard></Dashboard>,
                 children: [
-                    {
-                        path: '/dashboard/add-camp',
-                        element: <AddCamp></AddCamp>
-                    },
                     // Organizer dashboard section
                     {
+                        path: '/dashboard/add-camp',
+                        element: <AdminRoute><AddCamp></AddCamp></AdminRoute>
+                    },
+                    {
                         path: '/dashboard/organizerProfile',
-                        element: <OrganizerProfile></OrganizerProfile>
+                        element: <AdminRoute><OrganizerProfile></OrganizerProfile></AdminRoute>
                     },
                     {
                         path: '/dashboard/manage-camp',
-                        element: <ManageCamp></ManageCamp>,
-                        loader: ()=> fetch(`${import.meta.env.VITE_SERVER_URL}/camp-count`)
+                        element: <AdminRoute><ManageCamp></ManageCamp></AdminRoute>,
+                        loader: () => fetch(`${import.meta.env.VITE_SERVER_URL}/camp-count`)
                     },
                     {
                         path: '/dashboard/manage-registered',
-                        element: <ManageRegister></ManageRegister>
+                        element: <AdminRoute><ManageRegister></ManageRegister></AdminRoute>
                     },
                     {
                         path: '/dashboard/updateCamp/:id',
-                        element: <UpdateCamp></UpdateCamp>
+                        element: <AdminRoute><UpdateCamp></UpdateCamp></AdminRoute>
                     },
                     // participant dashboard section 
                     {
                         path: '/dashboard/register-camp',
-                        element: <RegisterCamp></RegisterCamp>
+                        element: <PrivateRoute><RegisterCamp></RegisterCamp></PrivateRoute>
                     },
                     {
                         path: '/dashboard/payment-history',
-                        element: <PaymentHistory></PaymentHistory>
+                        element: <PrivateRoute><PaymentHistory></PaymentHistory></PrivateRoute>
                     },
                 ]
             }

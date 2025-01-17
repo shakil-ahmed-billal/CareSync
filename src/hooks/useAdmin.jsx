@@ -6,15 +6,15 @@ const useAdmin = () => {
 
   const { user } = useAuth()
 
-  const { data: admin = false } = useQuery({
+  const { data: admin, isPending } = useQuery({
     queryKey: ['admin', user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
       const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL}/admin/${user?.email}`)
-      return data
+      return data.admin
     }
   })
-  return admin
+  return [admin, isPending]
 }
 
 export default useAdmin
