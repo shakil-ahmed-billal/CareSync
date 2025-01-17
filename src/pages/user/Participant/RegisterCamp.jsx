@@ -33,10 +33,10 @@ const RegisterCamp = () => {
                         <Table.HeadCell>Payment Status</Table.HeadCell>
                         <Table.HeadCell>Confirmation Status</Table.HeadCell>
                         <Table.HeadCell>Cancel</Table.HeadCell>
-                        <Table.HeadCell>Feedback</Table.HeadCell>
+                        <Table.HeadCell className='text-center'>Feedback</Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {registerCamp?.map(item => <RegisterRow key={item._id} item={item} refetch={refetch}></RegisterRow>)}
+                        {registerCamp?.map(item => <RegisterRow  key={item._id} item={item} refetch={refetch}></RegisterRow>)}
                     </Table.Body>
                 </Table>
             </div>

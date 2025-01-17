@@ -48,7 +48,8 @@ const router = createBrowserRouter([
                     },
                     {
                         path: '/dashboard/manage-camp',
-                        element: <ManageCamp></ManageCamp>
+                        element: <ManageCamp></ManageCamp>,
+                        loader: ()=> fetch(`${import.meta.env.VITE_SERVER_URL}/camp-count`)
                     },
                     {
                         path: '/dashboard/manage-registered',

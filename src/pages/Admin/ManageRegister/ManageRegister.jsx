@@ -7,13 +7,21 @@ const ManageRegister = () => {
 
   const axiosPublic = useAxiosPublic()
 
-  const {data: registerCamp = []}  =useQuery({
+  const {data: registerCamp = [] , refetch}  =useQuery({
     queryKey: ['manage-register'],
     queryFn: async()=>{
       const {data} = await axiosPublic('/manage-register')
       return data
     }
   })
+
+  const handleDelete = async(id) =>{
+    const {data} = await axiosPublic.delete(`/registerCamp/${id}`)
+    if(data.deletedCount>0){
+      refetch()
+    }
+    console.log(data)
+  }
 
   return (
     <div>
@@ -35,7 +43,7 @@ const ManageRegister = () => {
               <TableCell>{item?.paymentStatus === "Paid"? <p className="flex items-center gap-1"><BadgeCheck className="text-green-400"/> Paid</p>: 'Unpaid'}</TableCell>
               <TableCell>{item?.confirmationStatus}</TableCell>
               <TableCell>
-                {item?.paymentStatus === "Paid"? <Ban className="text-rose-500" /> : <ShieldCheck className="text-green-500" />}
+                {item?.paymentStatus === "Paid"? <Ban className="text-rose-500" /> : <ShieldCheck onClick={()=>handleDelete(item?._id)} className="text-green-500 cursor-pointer" />}
               </TableCell>
             </TableRow>)}
           </TableBody>

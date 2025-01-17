@@ -1,13 +1,26 @@
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
-import useCamps from "../../../hooks/useCamps";
+import { Select, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import { Delete, Edit } from "lucide-react";
+import { useState } from "react";
+import { useLoaderData } from "react-router-dom";
+import useCamps from "../../../hooks/useCamps";
 const ManageCamp = () => {
 
-  const [camps] = useCamps()
+  const { result } = useLoaderData()
+  const [itemPerPage, setItemPerPage] = useState(8)
+  const [currentPage, setCurrentPage] = useState(0)
+  const numberOfPages = Math.ceil(result / itemPerPage)
+  const pages = [...Array(numberOfPages).keys()];
+  const handlePage = (data) => {
+    setItemPerPage(data)
+    setCurrentPage(0)
+  }
+
+  const [camps] = useCamps({ currentPage, itemPerPage })
+
 
   return (
     <div>
-      <div className="overflow-x-auto mt-20">
+      <div className="overflow-x-auto pt-20">
         <Table>
           <TableHead>
             <TableHeadCell>Image</TableHeadCell>
@@ -27,11 +40,31 @@ const ManageCamp = () => {
               <TableCell>{item?.campLocation}</TableCell>
               <TableCell>{item?.healthcareName}</TableCell>
               <TableCell className="flex items-center gap-5">
-                <Edit className="text-blue-500"></Edit> 
+                <Edit className="text-blue-500"></Edit>
                 <Delete className="text-red-500"></Delete></TableCell>
             </TableRow>)}
           </TableBody>
         </Table>
+      </div>
+      {/* pagination section */}
+      <div className="w-full gap-2 flex flex-wrap justify-center mb-10">
+        {pages.map(item =>
+          <button
+            onClick={() => setCurrentPage(item)}
+            className={currentPage == item ? ' bg-gradient-to-r from-pink-500 to-orange-500 text-white dark:border-white border-white border-2 font-bold w-10 h-10 rounded-full ' : 'bg-gradient-to-r from-pink-500 to-orange-500 text-white font-bold w-10 h-10 rounded-full'}
+            key={item}>{item}
+          </button>)}
+        <Select
+          onChange={(e) =>
+            handlePage(parseInt(e.target.value))}
+          id="countries" required>
+          <option selected disabled value='Web Development'>{itemPerPage}</option>
+          <option value='2'>2</option>
+          <option value='4'>4</option>
+          <option value='6'>6</option>
+          <option value='8'>8</option>
+
+        </Select>
       </div>
     </div>
   )

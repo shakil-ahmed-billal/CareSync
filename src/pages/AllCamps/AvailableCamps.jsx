@@ -29,6 +29,7 @@ const AvailableCamps = () => {
             <div className="grid md:grid-cols-4 gap-5">
                 {camps?.map(item => <CampCard camp={item} key={item._id}></CampCard>)}
             </div>
+            {/* pagination section */}
             <div className="w-full gap-2 flex flex-wrap justify-center py-10">
                 {pages.map(item =>
                     <button

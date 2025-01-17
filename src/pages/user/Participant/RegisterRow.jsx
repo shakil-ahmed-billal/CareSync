@@ -1,9 +1,11 @@
 import { Modal, Table } from "flowbite-react";
-import { Banknote, CircleX } from "lucide-react";
+import { Banknote, CircleCheck, CircleX, MessagesSquare } from "lucide-react";
 import { useState } from "react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import StripePayment from "../../../components/Payment/StripePayment";
-
+import ReviewCard from "../../../components/Review/ReviewCard";
+import { Rating } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
 
 
 
@@ -26,9 +28,13 @@ const RegisterRow = ({ item, refetch }) => {
 
     // payment or modal function section
     const [openModal, setOpenModal] = useState(false);
+    const [openReview, setOpenReview] = useState(false);
 
     function onCloseModal() {
         setOpenModal(false);
+    }
+    function onCloseReview() {
+        setOpenReview(false);
     }
     return (
         <>
@@ -38,10 +44,10 @@ const RegisterRow = ({ item, refetch }) => {
                 </Table.Cell>
                 <Table.Cell>$ {campFee}</Table.Cell>
                 <Table.Cell>{participantName}</Table.Cell>
-                <Table.Cell>{paymentStatus === "Paid" ? "Paid" : <p onClick={() => setOpenModal(true)} className="flex items-center gap-1 text-blue-500 cursor-pointer"><Banknote />Pay</p>}</Table.Cell>
+                <Table.Cell>{paymentStatus === "Paid" ? <p><CircleCheck className="text-green-500 flex gap-2 items-center" /> Paid</p> : <p onClick={() => setOpenModal(true)} className="flex items-center gap-1 text-blue-500 cursor-pointer"><Banknote />Pay</p>}</Table.Cell>
                 <Table.Cell>{confirmationStatus}</Table.Cell>
                 <Table.Cell><CircleX onClick={() => handleDelete(_id)} className="text-red-500 cursor-pointer" /></Table.Cell>
-                <Table.Cell>{feedback}</Table.Cell>
+                <Table.Cell className="flex justify-center items-center">{feedback=== "feedback"? <MessagesSquare onClick={() => setOpenReview(true)}  className="cursor-pointer" />: feedback ==="N/A"? "N/A": <Rating style={{ maxWidth: 80 }} value={feedback} readOnly />}</Table.Cell>
             </Table.Row>
             {/* modal payment section */}
             <>
@@ -50,6 +56,18 @@ const RegisterRow = ({ item, refetch }) => {
                     <Modal.Body>
                         <div className="">
                             <StripePayment item={item}></StripePayment>
+                        </div>
+                    </Modal.Body>
+                </Modal>
+            </>
+            {/* modal payment section */}
+            {/* modal payment section */}
+            <>
+                <Modal show={openReview} size="xl" onClose={onCloseReview} popup>
+                    <Modal.Header />
+                    <Modal.Body>
+                        <div className="">
+                            <ReviewCard refetch={refetch} id={_id}></ReviewCard>
                         </div>
                     </Modal.Body>
                 </Modal>
