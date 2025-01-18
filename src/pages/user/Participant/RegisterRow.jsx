@@ -1,11 +1,11 @@
+import { Rating } from '@smastrom/react-rating';
+import '@smastrom/react-rating/style.css';
 import { Modal, Table } from "flowbite-react";
 import { Banknote, CircleCheck, CircleX, MessagesSquare } from "lucide-react";
 import { useState } from "react";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import StripePayment from "../../../components/Payment/StripePayment";
 import ReviewCard from "../../../components/Review/ReviewCard";
-import { Rating } from '@smastrom/react-rating'
-import '@smastrom/react-rating/style.css'
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 
 
@@ -13,11 +13,12 @@ const RegisterRow = ({ item, refetch }) => {
 
 
     const { _id, campName, campFee, participantName, paymentStatus, confirmationStatus, feedback } = item || {}
-    const axiosPublic = useAxiosPublic()
+
+    const axiosSecure = useAxiosSecure()
 
 
     const handleDelete = async (id) => {
-        const { data } = await axiosPublic.delete(`/registerCamp/${id}`)
+        const { data } = await axiosSecure.delete(`/registerCamp/${id}`)
         if (data.deletedCount > 0) {
             console.log('delete')
             refetch()
@@ -47,7 +48,7 @@ const RegisterRow = ({ item, refetch }) => {
                 <Table.Cell>{paymentStatus === "Paid" ? <p><CircleCheck className="text-green-500 flex gap-2 items-center" /> Paid</p> : <p onClick={() => setOpenModal(true)} className="flex items-center gap-1 text-blue-500 cursor-pointer"><Banknote />Pay</p>}</Table.Cell>
                 <Table.Cell>{confirmationStatus}</Table.Cell>
                 <Table.Cell><CircleX onClick={() => handleDelete(_id)} className="text-red-500 cursor-pointer" /></Table.Cell>
-                <Table.Cell className="flex justify-center items-center">{feedback=== "feedback"? <MessagesSquare onClick={() => setOpenReview(true)}  className="cursor-pointer" />: feedback ==="N/A"? "N/A": <Rating style={{ maxWidth: 80 }} value={feedback} readOnly />}</Table.Cell>
+                <Table.Cell className="flex justify-center items-center">{feedback === "feedback" ? <MessagesSquare onClick={() => setOpenReview(true)} className="cursor-pointer" /> : feedback === "N/A" ? "N/A" : <Rating style={{ maxWidth: 80 }} value={feedback} readOnly />}</Table.Cell>
             </Table.Row>
             {/* modal payment section */}
             <>

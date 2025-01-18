@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { app } from "../firebase/firebase.config.";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 export const AuthContext = createContext(null)
@@ -8,6 +9,7 @@ const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const axiosPubLic = useAxiosPublic()
 
     // authentication provider setup
     const auth = getAuth(app);
@@ -29,12 +31,12 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
     // user profile update 
-    const userProfile = (updateData) =>{
+    const userProfile = (updateData) => {
         setLoading(true)
-        return updateProfile(auth.currentUser , updateData)
+        return updateProfile(auth.currentUser, updateData)
     }
     // user Log out
-    const userLogOut = () =>{
+    const userLogOut = () => {
         setLoading(true)
         return signOut(auth)
     }
@@ -52,15 +54,26 @@ const AuthProvider = ({ children }) => {
     // user information set state
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            setLoading(false)
             setUser(currentUser)
+
+            // set user verify token 
+            const jwtUser = { email: currentUser?.email }
+            if (currentUser?.email) {
+                const { data } = await axiosPubLic.post('/jwt', jwtUser, { withCredentials: true })
+                console.log(data)
+            } else {
+                // clear user token 
+                const { data } = await axiosPubLic('/logout', { withCredentials: true })
+                console.log(data)
+            }
+            setLoading(false)
             console.log(currentUser)
         })
 
         return () => {
             return unSubscribe()
         }
-    }, [auth])
+    }, [auth, axiosPubLic])
     return (
         <AuthContext.Provider value={authInfo}>
             {/* render all components */}

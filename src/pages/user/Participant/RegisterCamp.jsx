@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Table } from "flowbite-react"
 import ResultError from '../../../error/ResultError'
 import useAuth from '../../../hooks/useAuth'
-import useAxiosPublic from '../../../hooks/useAxiosPublic'
+import useAxiosSecure from '../../../hooks/useAxiosSecure'
 import RegisterRow from './RegisterRow'
 
 
@@ -10,12 +10,12 @@ import RegisterRow from './RegisterRow'
 const RegisterCamp = () => {
 
     const { user } = useAuth()
-    const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
 
     const { data: registerCamp, refetch } = useQuery({
         queryKey: ['register:email', user?.email],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/registerCamp/${user?.email}`)
+            const { data } = await axiosSecure.get(`/registerCamp/${user?.email}`)
             return data
         }
     })
