@@ -3,7 +3,7 @@ import { Cloud } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { imageUpload } from "../../../API/ImageAPI";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddCamp = () => {
 
@@ -16,7 +16,7 @@ const AddCamp = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [isDragging, setIsDragging] = useState(false);
     const [image, setImage] = useState(null)
-    const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
 
 
     // Handle file selection when dropped or clicked
@@ -72,7 +72,7 @@ const AddCamp = () => {
                 postTime: new Date(),
                 participantCount: 0,
             }
-            const { data: result } = await axiosPublic.post('/add-camp', campData)
+            const { data: result } = await axiosSecure.post('/add-camp', campData)
             console.log(result)
         }
     }

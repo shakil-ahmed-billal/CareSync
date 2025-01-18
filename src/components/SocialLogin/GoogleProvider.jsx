@@ -1,14 +1,19 @@
+import { useLocation, useNavigate } from "react-router-dom"
 import saveUser from "../../API/UserSave"
 import useAuth from "../../hooks/useAuth"
 
 const GoogleProvider = () => {
 
     const { signInPopup } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
 
+    console.log(location)
     const handleLogin = async () => {
         try {
             const result = await signInPopup()
-            await saveUser({...result?.user })
+            await saveUser({ ...result?.user })
+            navigate(location.state ? location?.state : '/')
         } catch (error) {
             console.log(error)
         }

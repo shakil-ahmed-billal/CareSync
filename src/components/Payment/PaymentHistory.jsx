@@ -2,18 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import TransactionError from "../../error/TransactionError";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const PaymentHistory = () => {
 
     const { user } = useAuth()
-    const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
 
     const { data: history = [] } = useQuery({
         queryKey: ['payment-history', user?.email],
         queryFn: async () => {
-            const { data } = await axiosPublic(`/payment-history/${user?.email}`)
+            const { data } = await axiosSecure(`/payment-history/${user?.email}`)
             return data
         }
     })

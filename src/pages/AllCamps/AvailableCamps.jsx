@@ -1,5 +1,5 @@
 
-import { Select } from "flowbite-react"
+import { Select, TextInput } from "flowbite-react"
 import { useState } from "react"
 import { useLoaderData } from "react-router-dom"
 import CampCard from "../../components/CampCard/CampCard"
@@ -7,11 +7,13 @@ import useCamps from "../../hooks/useCamps"
 
 const AvailableCamps = () => {
 
-    
+
     const { result } = useLoaderData()
+    const [search, setSearch] = useState('')
+    const [sortFee, setFee] = useState('')
+    const [sortRegister, setRegister] = useState('')
 
-
-    console.log(result)
+    console.log(sortFee, sortRegister)
     // pagination function make
     const [itemPerPage, setItemPerPage] = useState(6)
     const [currentPage, setCurrentPage] = useState(0)
@@ -22,10 +24,22 @@ const AvailableCamps = () => {
         setCurrentPage(0)
     }
 
-    const [camps] = useCamps({currentPage, itemPerPage})
+    const [camps] = useCamps({ currentPage, itemPerPage, search , sortFee , sortRegister })
     return (
         <div className="dark:text-light2 py-10">
-
+            <div className="mb-5 flex gap-3 items-center justify-center">
+                <TextInput onChange={e => setSearch(e.target.value)} placeholder='Search'></TextInput>
+                <Select defaultValue={''} onClick={e => setRegister(e.target.value)}>
+                    <option selected disabled value="">Most Registered</option>
+                    <option value="as">Low Registered</option>
+                    <option value="ds">High Registered</option>
+                </Select>
+                <Select defaultValue={''} onClick={e => setFee(e.target.value)}>
+                    <option selected disabled value="">Price Sort</option>
+                    <option value="as">Low Price</option>
+                    <option value="ds">High Price</option>
+                </Select>
+            </div>
             <div className="grid md:grid-cols-4 gap-5">
                 {camps?.map(item => <CampCard camp={item} key={item._id}></CampCard>)}
             </div>

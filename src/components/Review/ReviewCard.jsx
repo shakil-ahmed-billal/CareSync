@@ -9,29 +9,29 @@ import { GoHome } from "react-icons/go";
 import { PiShareFatLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-const ReviewCard = ({id , refetch}) => {
+const ReviewCard = ({ id, refetch }) => {
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
-    const {user} = useAuth()
-    const axiosPublic = useAxiosPublic()
+    const { user } = useAuth()
+    const axiosSecure = useAxiosSecure()
 
     const handleFeedback = async (e) => {
         e.preventDefault()
         const review = e.target.feedback.value;
         const reviewInfo = {
-            name:user?.displayName,
+            name: user?.displayName,
             review,
-            email:user?.email,
-            registerId:id,
+            email: user?.email,
+            registerId: id,
             rating: rating,
-            photo:user?.photoURL
-        }   
+            photo: user?.photoURL
+        }
         console.log(reviewInfo)
-        const {data} = await axiosPublic.post('/feedback' , reviewInfo)
-        if(data.result.insertedId){
+        const { data } = await axiosSecure.post('/feedback', reviewInfo)
+        if (data.result.insertedId) {
             console.log('data add')
             refetch()
         }

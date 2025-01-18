@@ -1,8 +1,25 @@
-# React + Vite
+# CareSync
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Organizers
 
-Currently, two official plugins are available:
+- **Email:** caresync@gmail.com
+- **Password:** 1234
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Site URL
+
+[CareSync](https://caresync-bd.web.app)
+
+## Features
+
+1. **Join Us:** Easy registration for new users.
+2. **Available Camps:** Browse through various health camps.
+3. **Immunization Drive:** Public health initiative for immunization.
+4. **Fitness and Nutrition Expo:** Learn about fitness and nutrition.
+5. **Women’s Cancer Awareness Seminar:** Raise awareness about breast and cervical cancer.
+6. **Women’s Health Day:** Address unique health needs of women.
+7. **Free Dental Check-Up:** Improve oral health with free check-ups.
+8. **Eye Care Camp:** Free eye exams and vision screenings.
+9. **User Feedback:** Users can provide feedback on camps.
+10. **User Ratings:** Users can rate the camps they attended.
+
+Feel free to customize it further as per your needs!

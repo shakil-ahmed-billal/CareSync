@@ -1,11 +1,12 @@
+import { useQuery } from "@tanstack/react-query";
 import { Button, Checkbox, Label, Textarea, TextInput } from "flowbite-react";
 import { Cloud } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { imageUpload } from "../../../API/ImageAPI";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const UpdateCamp = () => {
 
@@ -18,8 +19,9 @@ const UpdateCamp = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [isDragging, setIsDragging] = useState(false);
     const [image, setImage] = useState(null)
+    const axiosSecure = useAxiosSecure()
     const axiosPublic = useAxiosPublic()
-    const {id} = useParams()
+    const { id } = useParams()
     console.log(id)
 
     // Handle file selection when dropped or clicked
@@ -60,10 +62,10 @@ const UpdateCamp = () => {
     };
     // camp image manage function section
 
-    const {data:details} = useQuery({
-        queryKey: ['camp-details' , id],
-        queryFn: async()=>{
-            const {data} = await axiosPublic(`/camp/${id}`)
+    const { data: details } = useQuery({
+        queryKey: ['camp-details', id],
+        queryFn: async () => {
+            const { data } = await axiosPublic(`/camp/${id}`)
             return data
         }
     })
@@ -78,12 +80,12 @@ const UpdateCamp = () => {
 
         const campData = {
             ...data,
-            image: imageURL? imageURL: details?.image,
+            image: imageURL ? imageURL : details?.image,
         }
-        const { data: result } = await axiosPublic.patch(`/updateCamp/${id}`, campData)
+        const { data: result } = await axiosSecure.patch(`/updateCamp/${id}`, campData)
         console.log(result)
         console.log(campData)
-        
+
 
     }
 
@@ -161,8 +163,8 @@ const UpdateCamp = () => {
                             label="camp-name*"
                             placeholder="Camp Name"
                             id="camp-name"
-                            type="text" 
-                            defaultValue={details?.campName}/>
+                            type="text"
+                            defaultValue={details?.campName} />
                         <Label>Healthcare Professional Name</Label>
                         <TextInput
                             {...register('healthcareName')}
@@ -173,7 +175,7 @@ const UpdateCamp = () => {
                             id="healthcareName"
                             type="text"
                             defaultValue={details?.healthcareName}
-                            />
+                        />
                         <div className="md:flex justify-between gap-5">
                             <div className="flex flex-col w-full">
                                 <Label>Camp Fees </Label>
@@ -192,9 +194,9 @@ const UpdateCamp = () => {
                                     {...register('date')}
                                     placeholder="Date or Time"
                                     id="date"
-                                    type="date" 
+                                    type="date"
                                     defaultValue={details?.date}
-                                    />
+                                />
                             </div>
                             <div className="flex flex-col w-full">
                                 <Label>Time</Label>
@@ -222,7 +224,7 @@ const UpdateCamp = () => {
                             placeholder="Describe Your Project Plan ......"
                             className=""
                             defaultValue={details?.description}
-                            />
+                        />
                         <div className="flex items-center">
                             <Checkbox />
                             <p className="ml-2 text-sm font-medium text-navy-700 dark:text-white">

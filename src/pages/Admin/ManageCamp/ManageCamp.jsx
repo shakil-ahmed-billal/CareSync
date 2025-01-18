@@ -1,13 +1,19 @@
-import { Select, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
+import { Select, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, TextInput } from "flowbite-react";
 import { Delete, Edit } from "lucide-react";
 import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCamps from "../../../hooks/useCamps";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 const ManageCamp = () => {
 
+
+  const [search, setSearch] = useState('')
+  const [sortFee, setFee] = useState('')
+  const [sortRegister, setRegister] = useState('')
+  const axiosSecure = useAxiosSecure()
+
+
   const { result } = useLoaderData()
-  const axiosPublic = useAxiosPublic()
   const [itemPerPage, setItemPerPage] = useState(8)
   const [currentPage, setCurrentPage] = useState(0)
   const numberOfPages = Math.ceil(result / itemPerPage)
@@ -17,26 +23,39 @@ const ManageCamp = () => {
     setCurrentPage(0)
   }
 
-  const [camps , refetch] = useCamps({ currentPage, itemPerPage })
+  const [camps, refetch] = useCamps({ currentPage, itemPerPage, search, sortFee, sortRegister })
 
-  const handleDelete = async(id)=>{
-    const {data} = await axiosPublic.delete(`/delete-camp/${id}`)
-    if(data.deletedCount >0){
+  const handleDelete = async (id) => {
+    const { data } = await axiosSecure.delete(`/delete-camp/${id}`)
+    if (data.deletedCount > 0) {
       refetch()
     }
     console.log(data)
-  } 
+  }
 
   return (
     <div>
-      <div className="overflow-x-auto pt-20">
+      <div className="overflow-x-auto">
+        <div className="mb-5 flex gap-3 items-center justify-center mt-5">
+          <TextInput onChange={e => setSearch(e.target.value)} placeholder='Search'></TextInput>
+          <Select defaultValue={''} onClick={e => setRegister(e.target.value)}>
+            <option selected disabled value="">Most Registered</option>
+            <option value="as">Low Registered</option>
+            <option value="ds">High Registered</option>
+          </Select>
+          <Select defaultValue={''} onClick={e => setFee(e.target.value)}>
+            <option selected disabled value="">Price Sort</option>
+            <option value="as">Low Price</option>
+            <option value="ds">High Price</option>
+          </Select>
+        </div>
         <Table>
           <TableHead>
             <TableHeadCell>Image</TableHeadCell>
             <TableHeadCell>Camp Name</TableHeadCell>
             <TableHeadCell>Date & Time</TableHeadCell>
             <TableHeadCell>Location</TableHeadCell>
-          <TableHeadCell>Healthcare Name</TableHeadCell>
+            <TableHeadCell>Healthcare Name</TableHeadCell>
             <TableHeadCell>Action Button</TableHeadCell>
           </TableHead>
           <TableBody className="divide-y">
@@ -50,13 +69,13 @@ const ManageCamp = () => {
               <TableCell>{item?.healthcareName}</TableCell>
               <TableCell className="flex items-center gap-5">
                 <Link to={`/dashboard/updateCamp/${item?._id}`}><Edit className="text-blue-500"></Edit></Link>
-                <Delete onClick={()=>handleDelete(item?._id)} className="text-red-500 cursor-pointer"></Delete></TableCell>
+                <Delete onClick={() => handleDelete(item?._id)} className="text-red-500 cursor-pointer"></Delete></TableCell>
             </TableRow>)}
           </TableBody>
         </Table>
       </div>
       {/* pagination section */}
-      <div className="w-full gap-2 flex flex-wrap justify-center mb-10">
+      <div className="w-full gap-2 flex flex-wrap justify-center mt-5 mb-5">
         {pages.map(item =>
           <button
             onClick={() => setCurrentPage(item)}

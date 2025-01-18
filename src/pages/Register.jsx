@@ -2,7 +2,7 @@ import { Checkbox, TextInput } from "flowbite-react";
 import { House, UserRoundPen } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { imageUpload } from "../API/ImageAPI";
 import saveUser from "../API/UserSave";
 import logo from '../assets/banner-log.jpg';
@@ -16,6 +16,7 @@ const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [imageLink, setImageLink] = useState("");
   const [image, setImage] = useState(null)
+  const navigate = useNavigate()
 
 
 
@@ -48,6 +49,7 @@ const Register = () => {
       await userProfile({ displayName: data.name, photoURL: imageURL })
       // user save database
       await saveUser({ ...result?.user, name: data.name, photoURL: imageURL })
+      navigate('/')
 
     } catch (error) {
       console.log(error)

@@ -1,15 +1,17 @@
 import { Checkbox, TextInput } from "flowbite-react";
 import { House } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from '../assets/banner-log.jpg';
-import useAuth from "../hooks/useAuth";
 import GoogleProvider from "../components/SocialLogin/GoogleProvider";
+import useAuth from "../hooks/useAuth";
 
 
 const Login = () => {
 
     const { loginUser } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
@@ -20,6 +22,7 @@ const Login = () => {
         loginUser(data.email, data.password)
             .then(async (res) => {
                 console.log(res.user)
+                navigate(location?.pathname ? location?.pathname : '/')
             }).catch(error => {
                 console.log(error)
             })

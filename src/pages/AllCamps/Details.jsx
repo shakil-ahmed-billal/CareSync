@@ -11,6 +11,7 @@ import { IoHeart, IoHeartOutline, IoShareSocialOutline, IoStar } from "react-ico
 import { useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Details = () => {
 
@@ -19,10 +20,11 @@ const Details = () => {
     const { user } = useAuth()
     const [isFavorite, setIsFavorite] = useState(false)
     const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
 
 
-    const { data: details , refetch } = useQuery({
-        queryKey: ['camp-details' , id],
+    const { data: details, refetch } = useQuery({
+        queryKey: ['camp-details', id],
         queryFn: async () => {
             const { data } = await axiosPublic(`/camp/${id}`)
             return data
@@ -40,7 +42,7 @@ const Details = () => {
         setOpenModal(false);
     }
 
-    const handleRegister = async(event) => {
+    const handleRegister = async (event) => {
         event.preventDefault()
         const form = event.target;
         const age = form.age.value;
@@ -61,12 +63,12 @@ const Details = () => {
             participantPhoto: user?.photoURL,
             registerTime: new Date()
         }
-        
+
         // send to server this information
-        
-        const {data} = await axiosPublic.post('/register' , info)
+
+        const { data } = await axiosSecure.post('/register', info)
         console.log(data)
-        if(data){
+        if (data) {
             refetch()
         }
     }
