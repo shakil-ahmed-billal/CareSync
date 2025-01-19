@@ -3,7 +3,6 @@ import Auth from "../Authentication/Auth/Auth";
 import MainLayout from "../layout/MainLayout";
 import AvailableCamps from "../pages/AllCamps/AvailableCamps";
 import Details from "../pages/AllCamps/Details";
-
 import PaymentHistory from "../components/Payment/PaymentHistory";
 import ErrorPage from "../error/ErrorPage";
 import AddCamp from "../pages/Admin/AddCamp/AddCamp";
@@ -19,6 +18,7 @@ import RegisterCamp from "../pages/user/Participant/RegisterCamp";
 import AdminRoute from "../private/AdminRoute";
 import PrivateRoute from "../private/PrivateRoute";
 import ParticipantProfile from "../pages/user/Profile/ParticipantProfile";
+import Analytics from "../pages/user/analytics/analytics";
 
 const router = createBrowserRouter([
     {
@@ -76,6 +76,10 @@ const router = createBrowserRouter([
                     {
                         path: '/dashboard/participant-profile',
                         element: <PrivateRoute><ParticipantProfile></ParticipantProfile></PrivateRoute>
+                    },
+                    {
+                        path: '/dashboard/analytics',
+                        element: <PrivateRoute><Analytics></Analytics></PrivateRoute>
                     },
                 ]
             }

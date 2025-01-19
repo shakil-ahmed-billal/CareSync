@@ -9,6 +9,7 @@ import {
 } from "react-icons/hi";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../../hooks/useAdmin";
+import useAuth from "../../hooks/useAuth";
 
 
 
@@ -16,18 +17,19 @@ const Dashboard = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const handleClose = () => setIsOpen(false);
+    const { userLogOut } = useAuth()
 
     const [admin] = useAdmin()
 
     console.log(admin)
 
     return (
-        <div className="h-[300px] max-h-[300px]">
+        <div className="">
             <div className="flex flex-col relative">
                 <div className="">
                     <Button className="mt-5 fixed z-10" onClick={() => setIsOpen(true)}><Menu /></Button>
                 </div>
-                <div className="">
+                <div className="min-h-[calc(100vh-372px)]">
                     <Outlet></Outlet>
                 </div>
             </div>
@@ -46,7 +48,7 @@ const Dashboard = () => {
                                 <Sidebar.Items>
                                     {!admin ?
                                         <Sidebar.ItemGroup>
-                                            <NavLink to={'/dashboard/profile'}>
+                                            <NavLink to={'/dashboard/analytics'}>
                                                 <Sidebar.Item icon={HiChartPie}>
                                                     Analytics
                                                 </Sidebar.Item>
@@ -90,10 +92,10 @@ const Dashboard = () => {
                                             </NavLink>
                                         </Sidebar.ItemGroup>}
                                     <Sidebar.ItemGroup>
-                                        <Sidebar.Item href="https://flowbite-react.com/" icon={HiCollection}>
-                                            Log Out
+                                        <Sidebar.Item href="" icon={HiCollection}>
+                                            <p onClick={()=>userLogOut()}> Log Out</p>
                                         </Sidebar.Item>
-                                        <Sidebar.Item href="https://github.com/themesberg/flowbite-react/issues" icon={HiInformationCircle}>
+                                        <Sidebar.Item href="" icon={HiInformationCircle}>
                                             Help
                                         </Sidebar.Item>
                                     </Sidebar.ItemGroup>

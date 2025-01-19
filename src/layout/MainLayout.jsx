@@ -12,7 +12,7 @@ const MainLayout = () => {
                 </nav>
             </header>
             <section className="dark:bg-dark1  bg-light2">
-                <main className="min-h-screen w-11/12 mx-auto pt-20 ">
+                <main className="w-11/12 min-h-[100vh-372px] mx-auto pt-20 ">
                     <Outlet></Outlet>
                 </main>
             </section>
