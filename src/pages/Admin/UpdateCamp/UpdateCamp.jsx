@@ -90,8 +90,8 @@ const UpdateCamp = () => {
     }
 
     return (
-        <div className="md:min-h-[calc(100vh-68px)] md:flex justify-center items-center">
-            <div className="md:flex gap-5 ">
+        <div className="pt-20 md:flex justify-center items-center">
+            <div className="md:flex gap-5 items-center">
                 {/* image file upload or preview section */}
                 <div className="md:w-[600px]  relative">
                     <div className="flex justify-center items-center w-full flex-col">

@@ -14,7 +14,7 @@ import useAdmin from "../../hooks/useAdmin";
 
 const Dashboard = () => {
 
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const handleClose = () => setIsOpen(false);
 
     const [admin] = useAdmin()
@@ -51,7 +51,7 @@ const Dashboard = () => {
                                                     Analytics
                                                 </Sidebar.Item>
                                             </NavLink>
-                                            <NavLink to={'/dashboard/add-camp'}>
+                                            <NavLink to={'/dashboard/participant-profile'}>
                                                 <Sidebar.Item icon={HiChartPie}>
                                                     Participant Profile
                                                 </Sidebar.Item>

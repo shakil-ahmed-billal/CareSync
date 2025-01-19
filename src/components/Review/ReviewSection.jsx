@@ -1,17 +1,10 @@
 
 
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
 // import required modules
-import { Rating } from '@smastrom/react-rating';
+
 import { useQuery } from '@tanstack/react-query';
-import { Button, Card } from 'flowbite-react';
-import { Link } from 'react-router-dom';
-import { Pagination } from 'swiper/modules';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
+import SingleReviewCard from './SingleReviewCard';
 
 
 
@@ -31,37 +24,11 @@ const ReviewSection = () => {
     console.log(review)
 
     return (
-        <div className=' py-20'>
-            <>
-                <Swiper
-                    slidesPerView={4}
-                    centeredSlides={true}
-                    spaceBetween={30}
-                    grabCursor={true}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    modules={[Pagination]}
-                    className="mySwiper"
-                >
-                    {review?.map(item => <SwiperSlide key={item._id}>
-                        <Card className=" ">
-                            <div className="">
-                                <img className='rounded-full w-20 h-20' src={item?.photo} alt="" />
-                            </div>
-                            <div className="space-y-3 ">
-                                <p>Name: {item?.name}</p>
-                                <p>Email: {item?.email}</p>
-                                <p>Feedback: {item?.review}</p>
-                                <p className='flex gap-2'> Rating: <Rating style={{ maxWidth: 100 }} value={item?.rating} readOnly /></p>
-                            </div>
-                            <div className="flex justify-center items-center py-5">
-                                <Link to={`/camp/${item?.registerId}`}><Button>See Camp</Button></Link>
-                            </div>
-                        </Card>
-                    </SwiperSlide>)}
-                </Swiper>
-            </>
+        <div className=' py-10'>
+            <p className='text-center text-4xl font-bold pb-10'>Participant Review Section</p>
+            <div className='grid md:grid-cols-4 gap-5 items-center justify-center'>
+                {review?.slice(0, 8).map(item => <SingleReviewCard item={item} key={item._id}></SingleReviewCard>)}
+            </div>
         </div>
     )
 }

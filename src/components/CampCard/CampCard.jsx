@@ -1,23 +1,58 @@
 
-import { useState } from "react";
-import { BiLike } from "react-icons/bi";
-import { BsEye, BsThreeDotsVertical } from "react-icons/bs";
-import { FaHeart } from "react-icons/fa";
-import { HiMiniShare } from "react-icons/hi2";
+import { Card } from "flowbite-react";
+import { CalendarDays, CircleUserRound, GitFork, MapPinned, Timer } from "lucide-react";
 import { Link } from "react-router-dom";
 
 
 const CampCard = ({ camp }) => {
 
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const { _id, campName, healthcareName, campFee, date, time, campLocation, description, image, participantCount } = camp || {}
 
   return (
-    <div className="">
+    <Card
+      className="max-w-sm "
+      imgAlt="Apple Watch Series 7 in colors pink, silver, and black"
+    // imgSrc={image}
 
-      <i className="fa fa-lock"></i>
-      <div className="shadow-lg dark:bg-dark2 rounded">
+    >
+      <div className="h-48 w-full relative">
+        <img
+          src={image}
+          alt="Apple Watch Series 7 in colors pink, silver, and black"
+          className="object-cover h-full w-full"
+        />
+        <p className="absolute top-0 right-0 bg-gray-500 p-2 rounded-full flex items-center bg-opacity-60"><GitFork /> {participantCount}</p>
+      </div>
+      <a href="#">
+        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+          {campName}
+        </h5>
+      </a>
+      <div className="space-y-1">
+        <p className=" flex items-center gap-1"><Timer /> {time}</p>
+        <p className=" flex items-center gap-1"><CalendarDays /> {date}</p>
+        <p className=" flex items-center gap-1"> <CircleUserRound />{healthcareName}</p>
+        <p className="flex items-center gap-1"><MapPinned />{campLocation}</p>
+        <p></p>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="text-3xl font-bold text-gray-900 dark:text-white">${campFee}</span>
+        <Link  to={`/camp/${_id}`}>
+          <a
+            href="#"
+            className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+          >
+            Details
+          </a></Link>
+      </div>
+    </Card>
+  );
+};
+
+export default CampCard;
+
+{/* <div className="">
         <img
           src={image}
           alt=""
@@ -64,10 +99,4 @@ const CampCard = ({ camp }) => {
             Details
           </button></Link>
         </div>
-      </div>
-
-    </div>
-  );
-};
-
-export default CampCard;
+      </div> */}

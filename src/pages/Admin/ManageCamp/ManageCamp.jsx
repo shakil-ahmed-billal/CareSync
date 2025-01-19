@@ -75,7 +75,7 @@ const ManageCamp = () => {
         </Table>
       </div>
       {/* pagination section */}
-      <div className="w-full gap-2 flex flex-wrap justify-center mt-5 mb-5">
+      <div className="w-full gap-2 flex flex-wrap justify-center mt-2">
         {pages.map(item =>
           <button
             onClick={() => setCurrentPage(item)}

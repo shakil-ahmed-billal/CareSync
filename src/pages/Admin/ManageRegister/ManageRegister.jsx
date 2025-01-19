@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import { BadgeCheck, Ban, ShieldCheck } from "lucide-react";
+import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageRegister = () => {
 
-  
+
   const axiosSecure = useAxiosSecure()
 
 
@@ -18,11 +19,28 @@ const ManageRegister = () => {
   })
 
   const handleDelete = async (id) => {
-    const { data } = await axiosSecure.delete(`/registerCamp/${id}`)
-    if (data.deletedCount > 0) {
-      refetch()
-    }
-    console.log(data)
+    Swal.fire({
+      title: "Are you sure?",
+      text: "do you want to deleted this participant!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data } = await axiosSecure.delete(`/registerCamp/${id}`)
+        if (data.deletedCount > 0) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "This Participant has been deleted.",
+            icon: "success"
+          });
+          refetch()
+        }
+        console.log(data)
+      }
+    });
   }
 
   return (

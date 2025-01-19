@@ -5,10 +5,11 @@ import { useState } from "react";
 
 // react icons
 import { useQuery } from "@tanstack/react-query";
-import { Calendar, Watch } from "lucide-react";
-import { BiChevronLeft, BiChevronRight, BiLocationPlus } from "react-icons/bi";
-import { IoHeart, IoHeartOutline, IoShareSocialOutline, IoStar } from "react-icons/io5";
-import { useParams } from "react-router-dom";
+import { AtSign, Calendar, CalendarDays, CircleUserRound, Mail, MapPinned, Timer, Watch } from "lucide-react";
+import toast from "react-hot-toast";
+import { BiLocationPlus } from "react-icons/bi";
+import { IoStar } from "react-icons/io5";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -18,7 +19,7 @@ const Details = () => {
     // camp dynamic details
     const { id } = useParams()
     const { user } = useAuth()
-    const [isFavorite, setIsFavorite] = useState(false)
+    const navigate = useNavigate()
     const axiosPublic = useAxiosPublic()
     const axiosSecure = useAxiosSecure()
 
@@ -44,6 +45,11 @@ const Details = () => {
 
     const handleRegister = async (event) => {
         event.preventDefault()
+
+        if (!user) {
+            toast.error('Please login first')
+            return navigate('/auth/login')
+        }
         const form = event.target;
         const age = form.age.value;
         const phone = form.phoneNumber.value;
@@ -66,10 +72,21 @@ const Details = () => {
 
         // send to server this information
 
-        const { data } = await axiosSecure.post('/register', info)
-        console.log(data)
-        if (data) {
-            refetch()
+        try {
+            const { data } = await axiosSecure.post('/register', info)
+            console.log(data)
+            if (data.insertedId) {
+                toast.success("camp successfully registered")
+                refetch()
+                setOpenModal(false)
+            }
+            if (data.message) {
+                toast.error(data?.message)
+                setOpenModal(false)
+            }
+        } catch (error) {
+            toast.error(error.message)
+            setOpenModal(false)
         }
     }
 
@@ -81,51 +98,12 @@ const Details = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                         {/* Image Section */}
                         <div className="relative">
-                            <div className="flex">
-                                <div className="flex items-center justify-center  bg-gray-100 overflow-hidden rounded-md">
-                                    <img
-                                        src={image}
-                                        className="w-full md:min-h-[400px] object-cover"
-                                    />
-                                </div>
-                                <div className="flex flex-col justify-between gap-[15px] ml-[20px]">
+                            <div className="flex h-full ">
+                                <img
+                                    src={image}
+                                    className="w-full h-full object-cover"
+                                />
 
-                                    <div className="flex flex-col gap-[10px]">
-                                        <button className="bg-gray-100 rounded-md w-max text-gray-600 p-2.5 hover:bg-gray-200">
-                                            <IoShareSocialOutline className="w-5 h-5" />
-                                        </button>
-
-                                        <button
-                                            className="bg-gray-100 rounded-md w-max text-gray-600 p-2.5 hover:bg-gray-200"
-                                            onClick={() => setIsFavorite(!isFavorite)}
-                                        >
-                                            {
-                                                isFavorite ? (
-                                                    <IoHeart className="w-5 h-5 text-red-500" />
-                                                ) : (
-                                                    <IoHeartOutline className="w-5 h-5" />
-                                                )
-                                            }
-                                        </button>
-                                    </div>
-
-                                    <div className="flex flex-col gap-[10px]">
-                                        <button
-
-                                            className="bg-gray-100 rounded-md w-max text-gray-600 p-2 hover:bg-gray-200"
-                                            aria-label="Previous image"
-                                        >
-                                            <BiChevronLeft className="w-6 h-6" />
-                                        </button>
-                                        <button
-
-                                            className="bg-gray-100 rounded-md w-max text-gray-600 p-2 hover:bg-gray-200"
-                                            aria-label="Next image"
-                                        >
-                                            <BiChevronRight className="w-6 h-6" />
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -181,19 +159,20 @@ const Details = () => {
                     <Modal.Header className="dark:bg-dark1" />
                     <Modal.Body className="dark:bg-dark1">
                         <div className="p-2 ">
-                            <div className="grid grid-cols-2 gap-5 dark:text-light2">
+                            <div className="grid md:grid-cols-2 gap-5 dark:text-light2">
                                 <div className="">
-                                    <div className="">
-                                        <p>Camp Fee: ${campFee}</p>
-                                        <p>Location: {campLocation}</p>
-                                        <p>Camp Name: {campName}</p>
-                                        <p>Healthcare Name: {healthcareName}</p>
+                                    <div className="space-y-1">
+                                        <p className=" flex items-center gap-1"><Timer /> {time}</p>
+                                        <p className=" flex items-center gap-1"><CalendarDays /> {date}</p>
+                                        <p className=" flex items-center gap-1"> <CircleUserRound />{healthcareName}</p>
+                                        <p className="flex items-center gap-1"><MapPinned />{campLocation}</p>
+                                        <p></p>
                                     </div>
                                     <hr className="my-5" />
                                     <div className="">
                                         <p>Your Information</p>
-                                        <p>Participant Name: {user?.displayName}</p>
-                                        <p>Participant Email: {user?.email}</p>
+                                        <p className="flex items-center gap-1"><AtSign /> {user?.displayName}</p>
+                                        <p className="flex items-center gap-1"><Mail /> {user?.email}</p>
                                     </div>
                                 </div>
                                 <div className="">

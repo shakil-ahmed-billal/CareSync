@@ -78,10 +78,10 @@ const AddCamp = () => {
     }
 
     return (
-        <div className="md:min-h-[calc(100vh-68px)] md:flex justify-center items-center">
-            <div className="md:flex gap-5 ">
+        <div className="md:flex pt-20 dark:bg-dark1  bg-light2 justify-center items-center ">
+            <div className="md:flex items-center h-full gap-5 ">
                 {/* image file upload or preview section */}
-                <div className="md:w-[600px]  relative">
+                <div className="md:w-[600px] h-full relative">
                     <div className="flex justify-center items-center w-full flex-col">
                         <div
                             className={`${isDragging ? "border-blue-300 " : "border-gray-300"} ${selectedImage ? "" : "border-dashed border-2 p-6"} rounded-lg w-full flex flex-col justify-center items-center `}

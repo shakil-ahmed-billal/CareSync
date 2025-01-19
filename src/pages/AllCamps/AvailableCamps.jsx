@@ -15,7 +15,7 @@ const AvailableCamps = () => {
 
     console.log(sortFee, sortRegister)
     // pagination function make
-    const [itemPerPage, setItemPerPage] = useState(6)
+    const [itemPerPage, setItemPerPage] = useState(8)
     const [currentPage, setCurrentPage] = useState(0)
     const numberOfPages = Math.ceil(result / itemPerPage)
     const pages = [...Array(numberOfPages).keys()];

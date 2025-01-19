@@ -2,6 +2,7 @@ import { Checkbox, TextInput } from "flowbite-react";
 import { House, UserRoundPen } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { imageUpload } from "../API/ImageAPI";
 import saveUser from "../API/UserSave";
@@ -49,16 +50,18 @@ const Register = () => {
       await userProfile({ displayName: data.name, photoURL: imageURL })
       // user save database
       await saveUser({ ...result?.user, name: data.name, photoURL: imageURL })
+      toast.success('User account register success')
       navigate('/')
 
     } catch (error) {
       console.log(error)
+      toast.error(error.message)
     }
   }
 
   return (
     <div className=" min-h-screen relative">
-      <Link to={'/'}><p className="absolute flex dark:text-light2 top-10 md:left-48"><House />-Back to Home</p></Link>
+      <Link to={'/'}><p className="absolute flex dark:text-light2 top-10 left-8 md:left-48"><House />-Back to Home</p></Link>
       <div className="md:w-10/12 h-screen mx-auto flex items-center">
 
 
@@ -67,8 +70,8 @@ const Register = () => {
         </div>
         <div className="flex h-full w-full items-center justify-center md:mx-0 lg:items-center lg:justify-center">
           {/* Sign in section */}
-          <div className="w-full max-w-full flex-col items-center lg:pl-0 xl:max-w-[420px] space-y-2">
-            <h4 className="mb-2.5 text-4xl font-bold text-navy-700 dark:text-light2">
+          <div className="md:w-full w-10/12 mx-auto max-w-full flex-col items-center lg:pl-0 xl:max-w-[420px] space-y-2">
+            <h4 className="mb-2.5 text-xl md:text-4xl font-bold text-navy-700 dark:text-light2">
               Register your account
             </h4>
             <p className="py-3 text-base dark:text-light2 text-gray-600">

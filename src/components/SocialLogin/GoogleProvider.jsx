@@ -1,3 +1,4 @@
+import toast from "react-hot-toast"
 import { useLocation, useNavigate } from "react-router-dom"
 import saveUser from "../../API/UserSave"
 import useAuth from "../../hooks/useAuth"
@@ -13,9 +14,11 @@ const GoogleProvider = () => {
         try {
             const result = await signInPopup()
             await saveUser({ ...result?.user })
+            toast.success('User Login Success')
             navigate(location.state ? location?.state : '/')
         } catch (error) {
             console.log(error)
+            toast.error(error.message)
         }
     }
 

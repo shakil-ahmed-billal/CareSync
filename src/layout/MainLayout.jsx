@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom"
-import Footer from "../components/Footer"
 import Header from "../components/Header"
+import MainFooter from "../components/footer/MainFooter"
+
 
 const MainLayout = () => {
     return (
@@ -10,11 +11,13 @@ const MainLayout = () => {
                     <Header></Header>
                 </nav>
             </header>
-            <main className="min-h-[calc(100vh-60px)] w-11/12 mx-auto">
-                <Outlet></Outlet>
-            </main>
+            <section className="dark:bg-dark1  bg-light2">
+                <main className="min-h-screen w-11/12 mx-auto pt-20 ">
+                    <Outlet></Outlet>
+                </main>
+            </section>
             <footer>
-                <Footer></Footer>
+                <MainFooter></MainFooter>
             </footer>
         </div>
     )

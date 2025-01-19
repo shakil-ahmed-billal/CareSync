@@ -10,8 +10,9 @@ import { PiShareFatLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
-const ReviewCard = ({ id, refetch }) => {
+const ReviewCard = ({ id, refetch , setOpenReview}) => {
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
@@ -33,6 +34,12 @@ const ReviewCard = ({ id, refetch }) => {
         const { data } = await axiosSecure.post('/feedback', reviewInfo)
         if (data.result.insertedId) {
             console.log('data add')
+            setOpenReview(false)
+            Swal.fire({
+                title: "Review Done!",
+                text: "Your review has been taken",
+                icon: "success"
+              });
             refetch()
         }
         console.log(data)

@@ -1,20 +1,26 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import { SmartphoneNfc } from "lucide-react"
 import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import Swal from 'sweetalert2'
 import useAuth from "../../hooks/useAuth"
 import useAxiosPublic from "../../hooks/useAxiosPublic"
+import useAxiosSecure from "../../hooks/useAxiosSecure"
 
-const CheckoutPayment = ({ item }) => {
+
+const CheckoutPayment = ({ item, setOpenModal, refetch }) => {
 
     const { user } = useAuth()
     const stripe = useStripe()
     const elements = useElements()
     const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
     const [clientSecret, setClientSecret] = useState('')
     const [transaction, setTransaction] = useState('')
 
     console.log(item)
 
-    const { _id, campFee , campName } = item || {}
+    const { _id, campFee, campName } = item || {}
 
     const itemPrice = {
         price: campFee
@@ -85,15 +91,25 @@ const CheckoutPayment = ({ item }) => {
                     date: new Date(),
                     campId: _id,
                 }
-                const {data} = await axiosPublic.post('/payment-history' , paymentInfo)
+                const { data } = await axiosSecure.post('/payment-history', paymentInfo)
                 console.log(data)
+                if (data.result.insertedId) {
+                    toast.success(`Transaction Id: ${paymentIntent?.id}`)
+                    setOpenModal(false)
+                    Swal.fire({
+                        title: "Payment Success!",
+                        text: `Transaction Id: ${paymentIntent?.id}`,
+                        icon: "success"
+                    });
+                    refetch()
+                }
             }
         }
     }
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form className="pt-5" onSubmit={handleSubmit}>
                 <CardElement
                     options={{
                         style: {
@@ -110,11 +126,10 @@ const CheckoutPayment = ({ item }) => {
                         },
                     }}
                 />
-                <button className="" type="submit" disabled={!stripe || !clientSecret}>
-                    Pay
+                <button className=" mt-5 text-sm bg-blue-500 px-5 py-1 flex items-center text-light3 gap-1 rounded-2xl" type="submit" disabled={!stripe || !clientSecret}>
+                    <SmartphoneNfc />  Pay
                 </button>
             </form>
-            {transaction && <p className=" text-green-500">Transaction: {transaction}</p>}
         </div>
     )
 }
