@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Table } from "flowbite-react"
+import Loading from '../../../components/Loading/Loading'
 import ResultError from '../../../error/ResultError'
 import useAuth from '../../../hooks/useAuth'
 import useAxiosSecure from '../../../hooks/useAxiosSecure'
@@ -12,7 +13,7 @@ const RegisterCamp = () => {
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
 
-    const { data: registerCamp, refetch } = useQuery({
+    const { data: registerCamp = [], refetch, isLoading } = useQuery({
         queryKey: ['register:email', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/registerCamp/${user?.email}`)
@@ -21,7 +22,9 @@ const RegisterCamp = () => {
     })
 
 
-
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     console.log(registerCamp)
     return (
         <div className="mt-20">

@@ -3,6 +3,7 @@ import { Card } from "flowbite-react"
 import { HandCoins, Nfc, Star, TicketPlus } from "lucide-react"
 import PieChartAnalytics from "../../../components/Chart/PieChartAnalytics"
 import TableChart from "../../../components/Chart/TableChart"
+import Loading from "../../../components/Loading/Loading"
 import useAuth from "../../../hooks/useAuth"
 import useAxiosSecure from "../../../hooks/useAxiosSecure"
 
@@ -12,7 +13,7 @@ const UserAnalytics = () => {
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
 
-    const { data: analytic = {} } = useQuery({
+    const { data: analytic = {}, isLoading } = useQuery({
         queryKey: ['analytics', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure(`/analytics/${user?.email}`)
@@ -20,7 +21,11 @@ const UserAnalytics = () => {
         }
     })
 
-    console.log(analytic)
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
+    
     return (
         <div>
             <div>

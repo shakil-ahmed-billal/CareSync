@@ -8,6 +8,7 @@ import ProfileUpdate from "../../../components/ProfileUpdate/ProfileUpdate";
 import useAdmin from "../../../hooks/useAdmin";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Loading from '../../../components/Loading/Loading';
 
 const OrganizerProfile = () => {
 
@@ -23,7 +24,7 @@ const OrganizerProfile = () => {
     setOpenModal(false);
   }
 
-  const { data: profileData } = useQuery({
+  const { data: profileData , isLoading} = useQuery({
     queryKey: ['user', user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure(`/user/${user?.email}`)
@@ -31,7 +32,9 @@ const OrganizerProfile = () => {
     }
   })
 
-  console.log(profileData)
+  if (isLoading) {
+    return <Loading></Loading>
+}
 
   return (
     <div>

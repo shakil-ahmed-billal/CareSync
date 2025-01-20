@@ -2,6 +2,7 @@ import { Select, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow
 import { Delete, Edit } from "lucide-react";
 import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
+import Loading from "../../../components/Loading/Loading";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCamps from "../../../hooks/useCamps";
 const ManageCamp = () => {
@@ -23,7 +24,7 @@ const ManageCamp = () => {
     setCurrentPage(0)
   }
 
-  const [camps, refetch] = useCamps({ currentPage, itemPerPage, search, sortFee, sortRegister })
+  const [camps, refetch, isLoading] = useCamps({ currentPage, itemPerPage, search, sortFee, sortRegister })
 
   const handleDelete = async (id) => {
     const { data } = await axiosSecure.delete(`/delete-camp/${id}`)
@@ -31,6 +32,10 @@ const ManageCamp = () => {
       refetch()
     }
     console.log(data)
+  }
+
+  if (isLoading) {
+    return <Loading></Loading>
   }
 
   return (

@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 
 import TransactionError from "../../error/TransactionError";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loading from "../Loading/Loading";
 
 
 const PaymentHistory = () => {
@@ -10,7 +11,7 @@ const PaymentHistory = () => {
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
 
-    const { data: history = [] } = useQuery({
+    const { data: history = [] , isLoading } = useQuery({
         queryKey: ['payment-history', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure(`/payment-history/${user?.email}`)
@@ -18,7 +19,9 @@ const PaymentHistory = () => {
         }
     })
 
-    console.log(history)
+    if (isLoading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div className="overflow-x-auto mt-20">

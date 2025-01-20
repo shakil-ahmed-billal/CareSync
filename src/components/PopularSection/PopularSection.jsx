@@ -4,12 +4,13 @@ import { Button } from 'flowbite-react'
 import { Link } from 'react-router-dom'
 import useAxiosPublic from '../../hooks/useAxiosPublic'
 import CampCard from '../CampCard/CampCard'
+import Loading from '../Loading/Loading'
 
 const PopularSection = () => {
 
     const axiosPublic = useAxiosPublic()
 
-    const { data: popular } = useQuery({
+    const { data: popular = [], isLoading } = useQuery({
         queryKey: ['popularCamp'],
         queryFn: async () => {
             const { data } = await axiosPublic('/popular-camp')
@@ -17,6 +18,9 @@ const PopularSection = () => {
         }
     })
 
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     console.log(popular)
     return (
         <div>

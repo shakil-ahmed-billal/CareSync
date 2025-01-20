@@ -3,6 +3,7 @@ import { Button, Select, TextInput } from "flowbite-react"
 import { useState } from "react"
 import { useLoaderData } from "react-router-dom"
 import CampCard from "../../components/CampCard/CampCard"
+import Loading from "../../components/Loading/Loading"
 import useCamps from "../../hooks/useCamps"
 
 const AvailableCamps = () => {
@@ -16,7 +17,7 @@ const AvailableCamps = () => {
 
     console.log(sortFee, sortRegister)
     // pagination function make
-    const [itemPerPage, setItemPerPage] = useState(8)
+    const [itemPerPage, setItemPerPage] = useState(6)
     const [currentPage, setCurrentPage] = useState(0)
     const numberOfPages = Math.ceil(result / itemPerPage)
     const pages = [...Array(numberOfPages).keys()];
@@ -25,7 +26,11 @@ const AvailableCamps = () => {
         setCurrentPage(0)
     }
 
-    const [camps] = useCamps({ currentPage, itemPerPage, search, sortFee, sortRegister })
+    const [camps, refetch, isLoading] = useCamps({ currentPage, itemPerPage, search, sortFee, sortRegister })
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div className="dark:text-light2 py-10">
             <div className="mb-5 flex gap-3 items-center justify-center">

@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 
 import { BadgeCheck, Ban, ShieldCheck } from "lucide-react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loading from "../../../components/Loading/Loading";
 
 const ManageRegister = () => {
 
@@ -10,7 +11,7 @@ const ManageRegister = () => {
   const axiosSecure = useAxiosSecure()
 
 
-  const { data: registerCamp = [], refetch } = useQuery({
+  const { data: registerCamp = [], refetch , isLoading} = useQuery({
     queryKey: ['manage-register'],
     queryFn: async () => {
       const { data } = await axiosSecure('/manage-register')
@@ -42,6 +43,10 @@ const ManageRegister = () => {
       }
     });
   }
+
+  if (isLoading) {
+    return <Loading></Loading>
+}
 
   return (
     <div>

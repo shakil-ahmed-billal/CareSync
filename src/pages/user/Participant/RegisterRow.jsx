@@ -1,20 +1,21 @@
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import { Modal, Table } from "flowbite-react";
-import { Banknote, BriefcaseConveyorBelt, CircleCheck, CircleDollarSign, CircleX, MessagesSquare } from "lucide-react";
+import { Banknote, BriefcaseConveyorBelt, CircleCheck, CircleDollarSign, CircleX,  MessagesSquare } from "lucide-react";
 import { useState } from "react";
 import Swal from 'sweetalert2';
 import StripePayment from '../../../components/Payment/StripePayment';
 import ReviewCard from "../../../components/Review/ReviewCard";
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from 'react-router-dom';
 
 
 
 const RegisterRow = ({ item, refetch }) => {
 
 
-    const { _id, campName, campFee, participantName, paymentStatus, confirmationStatus, feedback } = item || {}
+    const { _id, campName, campFee, campId, participantName, paymentStatus, confirmationStatus, feedback } = item || {}
 
     const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
@@ -62,7 +63,7 @@ const RegisterRow = ({ item, refetch }) => {
             </div>
             <Table.Row key={_id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {campName}
+                   <Link to={`/camp/${campId}`}> {campName}</Link>
                 </Table.Cell>
                 <Table.Cell>$ {campFee}</Table.Cell>
                 <Table.Cell>{participantName}</Table.Cell>

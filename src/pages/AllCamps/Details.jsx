@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loading from "../../components/Loading/Loading";
 
 const Details = () => {
 
@@ -24,7 +25,7 @@ const Details = () => {
     const axiosSecure = useAxiosSecure()
 
 
-    const { data: details, refetch } = useQuery({
+    const { data: details, refetch , isLoading} = useQuery({
         queryKey: ['camp-details', id],
         queryFn: async () => {
             const { data } = await axiosPublic(`/camp/${id}`)
@@ -88,6 +89,10 @@ const Details = () => {
             toast.error(error.message)
             setOpenModal(false)
         }
+    }
+
+    if (isLoading) {
+        return <Loading></Loading>
     }
 
     return (
