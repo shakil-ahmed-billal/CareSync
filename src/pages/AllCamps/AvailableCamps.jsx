@@ -1,5 +1,5 @@
 
-import { Select, TextInput } from "flowbite-react"
+import { Button, Select, TextInput } from "flowbite-react"
 import { useState } from "react"
 import { useLoaderData } from "react-router-dom"
 import CampCard from "../../components/CampCard/CampCard"
@@ -12,6 +12,7 @@ const AvailableCamps = () => {
     const [search, setSearch] = useState('')
     const [sortFee, setFee] = useState('')
     const [sortRegister, setRegister] = useState('')
+    const [layout, setLayout] = useState(true)
 
     console.log(sortFee, sortRegister)
     // pagination function make
@@ -24,7 +25,7 @@ const AvailableCamps = () => {
         setCurrentPage(0)
     }
 
-    const [camps] = useCamps({ currentPage, itemPerPage, search , sortFee , sortRegister })
+    const [camps] = useCamps({ currentPage, itemPerPage, search, sortFee, sortRegister })
     return (
         <div className="dark:text-light2 py-10">
             <div className="mb-5 flex gap-3 items-center justify-center">
@@ -39,8 +40,9 @@ const AvailableCamps = () => {
                     <option value="as">Low Price</option>
                     <option value="ds">High Price</option>
                 </Select>
+                <Button onClick={() => setLayout(!layout)}>Layout ({layout ? "3" : "2"})</Button>
             </div>
-            <div className="grid md:grid-cols-4 gap-5">
+            <div className={`grid ${layout ? "md:grid-cols-3" : "md:grid-cols-2"} gap-5 items-center justify-center place-items-center `}>
                 {camps?.map(item => <CampCard camp={item} key={item._id}></CampCard>)}
             </div>
             {/* pagination section */}

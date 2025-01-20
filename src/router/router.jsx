@@ -1,24 +1,24 @@
 import { createBrowserRouter } from "react-router-dom";
 import Auth from "../Authentication/Auth/Auth";
-import MainLayout from "../layout/MainLayout";
-import AvailableCamps from "../pages/AllCamps/AvailableCamps";
-import Details from "../pages/AllCamps/Details";
 import PaymentHistory from "../components/Payment/PaymentHistory";
 import ErrorPage from "../error/ErrorPage";
+import MainLayout from "../layout/MainLayout";
 import AddCamp from "../pages/Admin/AddCamp/AddCamp";
 import ManageCamp from "../pages/Admin/ManageCamp/ManageCamp";
 import ManageRegister from "../pages/Admin/ManageRegister/ManageRegister";
 import OrganizerProfile from "../pages/Admin/Profile/OrganizerProfile";
 import UpdateCamp from "../pages/Admin/UpdateCamp/UpdateCamp";
+import AvailableCamps from "../pages/AllCamps/AvailableCamps";
+import Details from "../pages/AllCamps/Details";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import RegisterCamp from "../pages/user/Participant/RegisterCamp";
+import ParticipantProfile from "../pages/user/Profile/ParticipantProfile";
+import UserAnalytics from "../pages/user/userAnalytics/UserAnalytics";
 import AdminRoute from "../private/AdminRoute";
 import PrivateRoute from "../private/PrivateRoute";
-import ParticipantProfile from "../pages/user/Profile/ParticipantProfile";
-import Analytics from "../pages/user/analytics/analytics";
 
 const router = createBrowserRouter([
     {
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: '/dashboard/analytics',
-                        element: <PrivateRoute><Analytics></Analytics></PrivateRoute>
+                        element: <PrivateRoute><UserAnalytics></UserAnalytics></PrivateRoute>
                     },
                 ]
             }

@@ -49,7 +49,8 @@ const AuthProvider = ({ children }) => {
         createNewUser,
         loginUser,
         userProfile,
-        userLogOut
+        userLogOut,
+        setLoading
     }
     // user information set state
     useEffect(() => {
