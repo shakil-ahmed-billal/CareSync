@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import useAuth from "../../../hooks/useAuth"
-import useAxiosSecure from "../../../hooks/useAxiosSecure"
 import { Card } from "flowbite-react"
 import { HandCoins, Nfc, Star, TicketPlus } from "lucide-react"
+import PieChartAnalytics from "../../../components/Chart/PieChartAnalytics"
+import TableChart from "../../../components/Chart/TableChart"
+import useAuth from "../../../hooks/useAuth"
+import useAxiosSecure from "../../../hooks/useAxiosSecure"
 
 
 const UserAnalytics = () => {
@@ -10,7 +12,7 @@ const UserAnalytics = () => {
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
 
-    const { data: analytic } = useQuery({
+    const { data: analytic = {} } = useQuery({
         queryKey: ['analytics', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure(`/analytics/${user?.email}`)
@@ -18,6 +20,7 @@ const UserAnalytics = () => {
         }
     })
 
+    console.log(analytic)
     return (
         <div>
             <div>
@@ -57,6 +60,14 @@ const UserAnalytics = () => {
                             </div>
                         </Card>
                     </div>
+                </div>
+            </div>
+            <div className="grid grid-cols-2 gap-5 h-full">
+                <div className="h-full flex items-center justify-center">
+                    <TableChart></TableChart>
+                </div>
+                <div className="">
+                    <PieChartAnalytics></PieChartAnalytics>
                 </div>
             </div>
         </div>

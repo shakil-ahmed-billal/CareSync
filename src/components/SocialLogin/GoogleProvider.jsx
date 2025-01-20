@@ -9,6 +9,7 @@ const GoogleProvider = () => {
     const navigate = useNavigate()
     const location = useLocation()
 
+
     console.log(location)
     const handleLogin = async () => {
         try {
