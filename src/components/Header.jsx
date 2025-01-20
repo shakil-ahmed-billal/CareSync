@@ -40,9 +40,11 @@ const Header = () => {
                             <span className="block text-sm">{user?.displayName}</span>
                             <span className="block truncate text-sm font-medium">{user?.email}</span>
                         </DropdownHeader>
-                        <DropdownItem>Dashboard</DropdownItem>
-                        <DropdownItem>Settings</DropdownItem>
-                        <DropdownItem>Earnings</DropdownItem>
+                        {admin ? <DropdownItem ><NavLink to={'/dashboard/manage-camp'}>Dashboard</NavLink></DropdownItem>
+                            : <DropdownItem ><NavLink to={'/dashboard/register-camp'}>Dashboard</NavLink></DropdownItem>}
+
+                        {admin ? <DropdownItem ><NavLink to={'/dashboard/organizerProfile'}>Organizer Profile</NavLink></DropdownItem>
+                            : <DropdownItem ><NavLink to={'/dashboard/analytics'}>Analytics</NavLink></DropdownItem>}
                         <DropdownDivider />
                         <DropdownItem onClick={() => userLogOut()}>Sign out</DropdownItem>
                     </Dropdown>}

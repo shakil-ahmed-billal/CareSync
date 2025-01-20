@@ -3,16 +3,18 @@ import { Button, Checkbox, Label, Textarea, TextInput } from "flowbite-react";
 import { Cloud } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { imageUpload } from "../../../API/ImageAPI";
+import Loading from "../../../components/Loading/Loading";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const UpdateCamp = () => {
 
 
     const { register, handleSubmit, formState: { errors } } = useForm()
-
+    const navigate = useNavigate()
 
     // camp image manage function section
     const [selectedImage, setSelectedImage] = useState(null);
@@ -62,7 +64,7 @@ const UpdateCamp = () => {
     };
     // camp image manage function section
 
-    const { data: details } = useQuery({
+    const { data: details = {}, isLoading } = useQuery({
         queryKey: ['camp-details', id],
         queryFn: async () => {
             const { data } = await axiosPublic(`/camp/${id}`)
@@ -70,6 +72,9 @@ const UpdateCamp = () => {
         }
     })
 
+    if (isLoading) {
+        return <Loading></Loading>
+    }
 
     // camp add for database
     const onSubmit = async (data) => {
@@ -82,11 +87,13 @@ const UpdateCamp = () => {
             ...data,
             image: imageURL ? imageURL : details?.image,
         }
-        const { data: result } = await axiosSecure.patch(`/updateCamp/${id}`, campData)
-        console.log(result)
         console.log(campData)
+        const { data: result } = await axiosSecure.patch(`/updateCamp/${id}`, campData)
 
-
+        if (result.modifiedCount > 0) {
+            toast.success("Camp information update successful")
+            navigate('/dashboard/manage-camp')
+        }
     }
 
     return (

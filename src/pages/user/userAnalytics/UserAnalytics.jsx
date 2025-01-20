@@ -62,7 +62,7 @@ const UserAnalytics = () => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-5 h-full">
+            <div className="grid md:grid-cols-2 gap-5 h-full">
                 <div className="h-full flex items-center justify-center">
                     <TableChart></TableChart>
                 </div>

@@ -1,6 +1,7 @@
 import { Checkbox, TextInput } from "flowbite-react";
 import { House } from "lucide-react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from '../assets/banner-log.jpg';
 import GoogleProvider from "../components/SocialLogin/GoogleProvider";
@@ -22,7 +23,8 @@ const Login = () => {
         loginUser(data.email, data.password)
             .then(async (res) => {
                 console.log(res.user)
-                navigate(location?.pathname ? location?.pathname : '/')
+                navigate(location?.state ? location?.state : '/')
+                toast.success('Login Successfully')
             }).catch(error => {
                 console.log(error)
             })

@@ -61,7 +61,7 @@ const ManageCamp = () => {
           <TableBody className="divide-y">
             {camps.map(item => <TableRow key={item._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
               <TableCell>
-                <img src={item?.image} className="w-12 h-12 rounded-full object-cover" alt="" />
+                <Link to={`/camp/${item._id}`}><img src={item?.image} className="w-12 h-12 rounded-full object-cover" alt="" /></Link>
               </TableCell>
               <TableCell>{item?.campName}</TableCell>
               <TableCell>{item?.date} & {item?.time}</TableCell>
