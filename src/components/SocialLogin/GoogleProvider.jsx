@@ -10,7 +10,7 @@ const GoogleProvider = () => {
     const location = useLocation()
 
 
-    console.log(location)
+
     const handleLogin = async () => {
         try {
             const result = await signInPopup()
@@ -18,7 +18,7 @@ const GoogleProvider = () => {
             toast.success('User Login Success')
             navigate(location.state ? location?.state : '/')
         } catch (error) {
-            console.log(error)
+    
             toast.error(error.message)
         }
     }

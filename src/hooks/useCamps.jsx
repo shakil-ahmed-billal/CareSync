@@ -4,7 +4,6 @@ import useAxiosPublic from "./useAxiosPublic"
 const useCamps = ({ currentPage, itemPerPage, search, sortFee, sortRegister }) => {
     const axiosPublic = useAxiosPublic()
 
-    console.log(currentPage, itemPerPage)
     const { data: camps = [], refetch, isLoading } = useQuery({
         queryKey: ['all-camps', currentPage, itemPerPage, search, sortFee, sortRegister],
         queryFn: async () => {

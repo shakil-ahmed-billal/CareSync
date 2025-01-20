@@ -24,7 +24,7 @@ const UpdateCamp = () => {
     const axiosSecure = useAxiosSecure()
     const axiosPublic = useAxiosPublic()
     const { id } = useParams()
-    console.log(id)
+    
 
     // Handle file selection when dropped or clicked
     const handleFileDrop = (e) => {
@@ -79,7 +79,6 @@ const UpdateCamp = () => {
     // camp add for database
     const onSubmit = async (data) => {
 
-        console.log(image)
         // camp image upload api call
         const imageURL = image && await imageUpload(image)
 
@@ -87,7 +86,7 @@ const UpdateCamp = () => {
             ...data,
             image: imageURL ? imageURL : details?.image,
         }
-        console.log(campData)
+      
         const { data: result } = await axiosSecure.patch(`/updateCamp/${id}`, campData)
 
         if (result.modifiedCount > 0) {

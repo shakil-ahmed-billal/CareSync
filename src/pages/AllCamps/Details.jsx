@@ -33,7 +33,6 @@ const Details = () => {
         }
     })
 
-    console.log(details)
     const { _id, campName, healthcareName, campFee, date, time, campLocation, description, image, participantCount } = details || {}
     // camp dynamic details
 
@@ -75,7 +74,7 @@ const Details = () => {
 
         try {
             const { data } = await axiosSecure.post('/register', info)
-            console.log(data)
+            
             if (data.insertedId) {
                 toast.success("camp successfully registered")
                 refetch()

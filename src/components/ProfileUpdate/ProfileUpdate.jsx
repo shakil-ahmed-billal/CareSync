@@ -34,21 +34,21 @@ const ProfileUpdate = ({ setOpenModal }) => {
     };
 
     const handleUpdate = async (data) => {
-        console.log(data)
+
 
         const imageURL = image ? await imageUpload(image) : user?.photoURL;
-        console.log(image)
+
 
 
         try {
             await userProfile({ displayName: data.name, photoURL: imageURL })
             const { data: result } = await axiosSecure.patch(`/profile-update/${user?.email}`, data)
-            console.log(result)
+
             setLoading(false)
             setOpenModal(false)
             toast.success("user profile Update ")
         } catch (error) {
-            console.log(error)
+            toast.error(error?.message)
         }
     }
 

@@ -39,7 +39,6 @@ const ManageRegister = () => {
           });
           refetch()
         }
-        console.log(data)
       }
     });
   }

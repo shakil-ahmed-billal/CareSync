@@ -17,16 +17,16 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
     const onSubmit = (data) => {
-        console.log(data)
+
 
         // user login function
         loginUser(data.email, data.password)
             .then(async (res) => {
-                console.log(res.user)
+            
                 navigate(location?.state ? location?.state : '/')
                 toast.success('Login Successfully')
             }).catch(error => {
-                console.log(error)
+                toast.error(error.message)
             })
     }
     return (

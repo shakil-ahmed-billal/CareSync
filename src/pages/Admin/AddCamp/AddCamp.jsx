@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { imageUpload } from "../../../API/ImageAPI";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const AddCamp = () => {
 
@@ -73,7 +74,9 @@ const AddCamp = () => {
                 participantCount: 0,
             }
             const { data: result } = await axiosSecure.post('/add-camp', campData)
-            console.log(result)
+            if(result?.insertedId){
+                toast.success('This camp add successful')
+            }
         }
     }
 

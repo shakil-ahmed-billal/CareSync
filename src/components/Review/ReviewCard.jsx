@@ -30,10 +30,10 @@ const ReviewCard = ({ id, refetch , setOpenReview}) => {
             rating: rating,
             photo: user?.photoURL
         }
-        console.log(reviewInfo)
+     
         const { data } = await axiosSecure.post('/feedback', reviewInfo)
         if (data.result.insertedId) {
-            console.log('data add')
+          
             setOpenReview(false)
             Swal.fire({
                 title: "Review Done!",
@@ -42,7 +42,7 @@ const ReviewCard = ({ id, refetch , setOpenReview}) => {
               });
             refetch()
         }
-        console.log(data)
+      
     }
 
     return (

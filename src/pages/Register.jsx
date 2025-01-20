@@ -39,9 +39,6 @@ const Register = () => {
     const imageFile = image
     const imageURL = await imageUpload(imageFile)
 
-    console.log(imageURL)
-    console.log(data)
-
 
     try {
       // new user create firebase 
@@ -54,7 +51,6 @@ const Register = () => {
       navigate('/')
 
     } catch (error) {
-      console.log(error)
       toast.error(error.message)
     }
   }

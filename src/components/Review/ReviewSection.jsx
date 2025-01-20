@@ -21,7 +21,7 @@ const ReviewSection = () => {
         }
     })
 
-    console.log(review)
+ 
 
     return (
         <div className=' py-10'>

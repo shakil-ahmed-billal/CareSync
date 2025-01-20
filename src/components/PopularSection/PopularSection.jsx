@@ -21,7 +21,7 @@ const PopularSection = () => {
     if (isLoading) {
         return <Loading></Loading>
     }
-    console.log(popular)
+ 
     return (
         <div>
             <p className='text-center text-4xl font-bold my-10'>Most Popular Camp</p>

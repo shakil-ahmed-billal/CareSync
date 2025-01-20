@@ -18,7 +18,7 @@ const CheckoutPayment = ({ item, setOpenModal, refetch }) => {
     const [clientSecret, setClientSecret] = useState('')
     const [transaction, setTransaction] = useState('')
 
-    console.log(item)
+
 
     const { _id, campFee, campName } = item || {}
 
@@ -26,7 +26,7 @@ const CheckoutPayment = ({ item, setOpenModal, refetch }) => {
         price: campFee
     }
 
-    console.log(itemPrice)
+
 
     // payment intent load 
     useEffect(() => {
@@ -34,7 +34,7 @@ const CheckoutPayment = ({ item, setOpenModal, refetch }) => {
         const handleData = async () => {
             const { data } = await axiosPublic.post('/payment-create', itemPrice)
             setClientSecret(data.clientSecret)
-            console.log(data)
+        
         }
         handleData()
     }, [axiosPublic])
@@ -55,12 +55,12 @@ const CheckoutPayment = ({ item, setOpenModal, refetch }) => {
             card,
         })
         if (error) {
-            console.log(error)
+            toast.error(error)
         }
         else {
             console.log('Payment', paymentMethod)
         }
-        console.log(clientSecret)
+       
         // confirm card payment 
         const { paymentIntent, error: paymentError } = await stripe.confirmCardPayment(
             clientSecret,
@@ -77,9 +77,8 @@ const CheckoutPayment = ({ item, setOpenModal, refetch }) => {
 
         // payment error
         if (paymentError) {
-            console.log('payment error', paymentError)
+            toast.error('payment error', paymentError)
         } else {
-            console.log('confirm payment', paymentIntent)
             if (paymentIntent.status === 'succeeded') {
                 setTransaction(paymentIntent?.id)
 
@@ -92,7 +91,7 @@ const CheckoutPayment = ({ item, setOpenModal, refetch }) => {
                     campId: _id,
                 }
                 const { data } = await axiosSecure.post('/payment-history', paymentInfo)
-                console.log(data)
+           
                 if (data.result.insertedId) {
                     toast.success(`Transaction Id: ${paymentIntent?.id}`)
                     setOpenModal(false)

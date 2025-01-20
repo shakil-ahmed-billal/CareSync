@@ -31,7 +31,6 @@ const ManageCamp = () => {
     if (data.deletedCount > 0) {
       refetch()
     }
-    console.log(data)
   }
 
   if (isLoading) {

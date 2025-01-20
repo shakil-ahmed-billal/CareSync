@@ -10,7 +10,6 @@ const saveUser = async (user) =>{
         image: user?.photoURL,
         acTime: new Date()
     })
-    console.log(data)
 }
 
 export default saveUser

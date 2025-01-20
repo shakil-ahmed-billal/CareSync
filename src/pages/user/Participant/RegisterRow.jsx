@@ -33,7 +33,7 @@ const RegisterRow = ({ item, refetch }) => {
             if (result.isConfirmed) {
                 const { data } = await axiosSecure.delete(`/registerCamp/${id}`)
                 if (data.deletedCount > 0) {
-                    console.log('delete')
+                  
                     Swal.fire({
                         title: "Deleted!",
                         text: "this camp has been deleted.",

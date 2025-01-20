@@ -25,7 +25,7 @@ const RegisterCamp = () => {
     if (isLoading) {
         return <Loading></Loading>
     }
-    console.log(registerCamp)
+    
     return (
         <div className="mt-20">
             <div className="overflow-x-auto">

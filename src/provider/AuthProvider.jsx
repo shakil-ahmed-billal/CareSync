@@ -61,14 +61,14 @@ const AuthProvider = ({ children }) => {
             const jwtUser = { email: currentUser?.email }
             if (currentUser?.email) {
                 const { data } = await axiosPubLic.post('/jwt', jwtUser, { withCredentials: true })
-                console.log(data)
+             
             } else {
                 // clear user token 
                 const { data } = await axiosPubLic('/logout', { withCredentials: true })
-                console.log(data)
+               
             }
             setLoading(false)
-            console.log(currentUser)
+          
         })
 
         return () => {

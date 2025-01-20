@@ -21,7 +21,7 @@ const Dashboard = () => {
 
     const [admin] = useAdmin()
 
-    console.log(admin)
+
 
     return (
         <div className="">

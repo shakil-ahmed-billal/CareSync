@@ -15,7 +15,6 @@ const AvailableCamps = () => {
     const [sortRegister, setRegister] = useState('')
     const [layout, setLayout] = useState(true)
 
-    console.log(sortFee, sortRegister)
     // pagination function make
     const [itemPerPage, setItemPerPage] = useState(6)
     const [currentPage, setCurrentPage] = useState(0)
