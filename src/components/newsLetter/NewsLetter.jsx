@@ -2,16 +2,28 @@
 import React from "react";
 
 // react icons
-import {AiOutlineMail} from "react-icons/ai";
+import { AiOutlineMail } from "react-icons/ai";
+import Swal from "sweetalert2";
 
 const NewsLetter = () => {
+
+    const handleNews = (e) => {
+        e.preventDefault()
+        const email = e.target.email.value;
+        Swal.fire({
+            title: "Successful!",
+            text: email + " has been subscribed to our newsletter",
+            icon: "success"
+        });
+    }
+
 
     return (
         <section className="w-full rounded-xl p-[20px]">
             <div className="flex lg:flex-row flex-col items-center justify-between gap-[20px]">
                 <div className="w-full sm:w-[80%] lg:w-[50%]">
                     <img src="https://i.ibb.co/WkhTsW1/undraw-Mailbox-re-dvds.png" alt="image"
-                         className="w-full"/>
+                        className="w-full" />
                 </div>
 
                 <div className="w-full lg:w-[50%]">
@@ -21,12 +33,13 @@ const NewsLetter = () => {
                         stories, case studies and tips right
                         in your mailbox. <b>Subscribe now!</b></p>
 
-                    <form className="mt-5">
+                    <form onSubmit={handleNews} className="mt-5">
                         <div className="relative">
                             <input placeholder="Email Address"
-                                   className="w-full py-3 pr-4 pl-14 outline-none focus:ring-0 border rounded-md border-[#00b0ff]"/>
+                                name="email"
+                                className="w-full py-3 pr-4 pl-14 outline-none focus:ring-0 border rounded-md border-[#00b0ff]" />
                             <AiOutlineMail
-                                className="absolute top-[50%] transform translate-y-[-50%] left-3 text-[#00b0ff] text-[1.7rem]"/>
+                                className="absolute top-[50%] transform translate-y-[-50%] left-3 text-[#00b0ff] text-[1.7rem]" />
                         </div>
 
                         <button
@@ -40,4 +53,3 @@ const NewsLetter = () => {
 };
 
 export default NewsLetter;
-                    

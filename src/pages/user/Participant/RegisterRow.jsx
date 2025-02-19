@@ -59,7 +59,6 @@ const RegisterRow = ({ item, refetch }) => {
     return (
         <>
             <div className="">
-
             </div>
             <Table.Row key={_id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
@@ -69,7 +68,7 @@ const RegisterRow = ({ item, refetch }) => {
                 <Table.Cell>{participantName}</Table.Cell>
                 <Table.Cell>{paymentStatus === "Paid" ? <p className='flex gap-1 items-center'><CircleCheck className="text-green-500 " /> Paid</p> : <p onClick={() => setOpenModal(true)} className="flex items-center gap-1 text-blue-500 cursor-pointer"><Banknote />Pay</p>}</Table.Cell>
                 <Table.Cell>{confirmationStatus}</Table.Cell>
-                <Table.Cell><button disabled={paymentStatus === "Paid"}><CircleX onClick={() => handleDelete(_id)} className="text-red-500 " /></button></Table.Cell>
+                <Table.Cell><button disabled={paymentStatus === "Paid"}>{paymentStatus === "Paid" ? "N/A" : <CircleX onClick={() => handleDelete(_id)} className="text-red-500 " />}</button></Table.Cell>
                 <Table.Cell className="flex justify-center items-center">{feedback === "feedback" ? <MessagesSquare onClick={() => setOpenReview(true)} className="cursor-pointer" /> : feedback === "N/A" ? "N/A" : <Rating style={{ maxWidth: 80 }} value={feedback} readOnly />}</Table.Cell>
             </Table.Row>
             {/* modal payment section */}
