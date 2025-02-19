@@ -98,7 +98,7 @@ const Details = () => {
         <div className="">
             {/* details section */}
             <div className="min-h-[calc(100vh-68px)] flex justify-center items-center">
-                <div className="lg:p-8 bg-light1 dark:bg-dark3">
+                <div className="lg:p-8 md:bg-light1 md:dark:bg-dark3">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                         {/* Image Section */}
                         <div className="relative">
