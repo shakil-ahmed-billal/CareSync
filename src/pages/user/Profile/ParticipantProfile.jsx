@@ -38,17 +38,17 @@ const ParticipantProfile = () => {
             <div className=" pt-20">
                 <div className="">
                     <div>
-                        <div className="flex flex-col items-center justify-center p-4 dark:text-light3">
-                            <div className="w-full  relative">
-                                <img className="w-full hidden md:flex object-cover md:h-full h-screen" src={bg} alt="" />
-                                <div className="md:absolute top-10 right-[45%]">
+                        <div className="flex flex-col items-center justify-center p-4 dark:text-light3 ">
+                            <div className="w-full  relative border py-10 text-center bg-blur-xl rounded-md">
+                               
+                                <div className="">
                                     <div className="flex items-center flex-col justify-center">
                                         <img className="rounded-full w-28 h-28" src={user?.photoURL} alt="" />
                                         <p className="pt-2 text-green-400">Role: {!admin ? 'Organizer' : 'Participant'}</p>
                                         <p className="flex items-center gap-2">Verify: {user?.emailVerified ? <BadgeCheck className="text-green-400" /> : <BadgeAlert className="text-red-500" />}</p>
                                     </div>
 
-                                    <div className="text-start space-y-2 mt-5">
+                                    <div className="text-center space-y-2 mt-5">
                                         <p className="font-bold "> Name: {user?.displayName}</p>
                                         <p>Email: {user?.email}</p>
                                         {user && <div className="space-y-2">
