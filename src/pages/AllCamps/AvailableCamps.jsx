@@ -44,9 +44,9 @@ const AvailableCamps = () => {
                     <option value="as">Low Price</option>
                     <option value="ds">High Price</option>
                 </Select>
-                <Button onClick={() => setLayout(!layout)}>Layout ({layout ? "3" : "2"})</Button>
+                <Button onClick={() => setLayout(!layout)}>Layout ({layout ? "3" : "4"})</Button>
             </div>
-            <div className={`grid ${layout ? "md:grid-cols-3" : "md:grid-cols-2"} gap-5 items-center justify-center place-items-center `}>
+            <div className={`grid ${layout ? "md:grid-cols-4" : "md:grid-cols-3"} gap-5 items-center justify-center place-items-center `}>
                 {camps?.map(item => <CampCard camp={item} key={item._id}></CampCard>)}
             </div>
             {/* pagination section */}

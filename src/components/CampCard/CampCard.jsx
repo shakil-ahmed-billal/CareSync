@@ -11,7 +11,7 @@ const CampCard = ({ camp }) => {
 
   return (
     <Card
-      className="max-w-sm w-full rounded-lg border border-gray-200 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+      className="max-w-sm w-full rounded-lg border border-gray-200 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 h-full"
       imgAlt="Apple Watch Series 7 in colors pink, silver, and black"
     // imgSrc={image}
 
@@ -22,7 +22,7 @@ const CampCard = ({ camp }) => {
           alt="Apple Watch Series 7 in colors pink, silver, and black"
           className="object-cover h-full w-full"
         />
-        <p className="absolute top-0 right-0 bg-gray-500 p-2 rounded-full flex items-center bg-opacity-60"><GitFork /> {participantCount}</p>
+        <p className="absolute top-0 right-0 bg-gray-500 p-2 text-white rounded-full flex items-center bg-opacity-60"><GitFork /> {participantCount}</p>
       </div>
       <a href="#">
         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
