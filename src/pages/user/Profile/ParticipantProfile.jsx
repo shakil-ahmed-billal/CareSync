@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { Button, Modal } from "flowbite-react";
+import { Button, Card, Modal } from "flowbite-react";
 import { BadgeAlert, BadgeCheck } from "lucide-react";
 import { useState } from "react";
 import bg from '../../../assets/profile-bg.png';
@@ -37,9 +37,9 @@ const ParticipantProfile = () => {
         <div>
             <div className=" pt-20">
                 <div className="">
-                    <div>
+                    <Card>
                         <div className="flex flex-col items-center justify-center p-4 dark:text-light3 ">
-                            <div className="w-full  relative border py-10 text-center bg-blur-xl rounded-md">
+                            <div className="w-full  relative dark:border-none border py-10 text-center bg-blur-xl rounded-md">
                                
                                 <div className="">
                                     <div className="flex items-center flex-col justify-center">
@@ -62,7 +62,7 @@ const ParticipantProfile = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Card>
                 </div>
             </div>
             {/* modal components */}

@@ -4,6 +4,7 @@ import TransactionError from "../../error/TransactionError";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../Loading/Loading";
+import { CircleCheck } from "lucide-react";
 
 
 const PaymentHistory = () => {
@@ -38,7 +39,7 @@ const PaymentHistory = () => {
                         <TableCell className="text-green-400">{item?.transaction}</TableCell>
                         <TableCell>{item?.campName}</TableCell>
                         <TableCell>${item?.amount}</TableCell>
-                        <TableCell>{item?.paymentStatus}</TableCell>
+                        <TableCell className="flex items-center gap-2">{item?.paymentStatus} <CircleCheck className="text-green-500 " /></TableCell>
                         <TableCell>{item?.confirmationStatus}</TableCell>
                     </TableRow>)}
                 </TableBody>
