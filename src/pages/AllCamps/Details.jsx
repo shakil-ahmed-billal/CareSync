@@ -10,10 +10,10 @@ import toast from "react-hot-toast";
 import { BiLocationPlus } from "react-icons/bi";
 import { IoStar } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
+import Loading from "../../components/Loading/Loading";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Loading from "../../components/Loading/Loading";
 
 const Details = () => {
 
@@ -25,7 +25,7 @@ const Details = () => {
     const axiosSecure = useAxiosSecure()
 
 
-    const { data: details, refetch , isLoading} = useQuery({
+    const { data: details, refetch, isLoading } = useQuery({
         queryKey: ['camp-details', id],
         queryFn: async () => {
             const { data } = await axiosPublic(`/camp/${id}`)
@@ -74,7 +74,7 @@ const Details = () => {
 
         try {
             const { data } = await axiosSecure.post('/register', info)
-            
+
             if (data.insertedId) {
                 toast.success("camp successfully registered")
                 refetch()
