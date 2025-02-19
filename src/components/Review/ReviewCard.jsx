@@ -42,21 +42,13 @@ const ReviewCard = ({ id, refetch , setOpenReview}) => {
               });
             refetch()
         }
-      
     }
 
     return (
-        <div
-            className=" boxShadow rounded-md  w-full p-4 sm:p-8 dark:text-light3">
-
-            <h3 className="text-[24px] font-semibold text-center">Session
-                feedback</h3>
-            <p className="text-[14px] font-[400] text-center">
-                Please rate your experience below
-            </p>
-
-            <div
-                className="flex items-center sm:flex-row flex-col sm:space-x-12 w-full my-[20px] justify-center">
+        <div className=" boxShadow rounded-md  w-full p-4 sm:p-8 dark:text-light3">
+            <h3 className="text-[24px] font-semibold text-center">Session feedback</h3>
+            <p className="text-[14px] font-[400] text-center"> Please rate your experience below </p>
+            <div className="flex items-center sm:flex-row flex-col sm:space-x-12 w-full my-[20px] justify-center">
                 <div className="flex items-center space-x-6 justify-center mb-[10px]">
                     {[...Array(5)].map((_, index) => {
                         const starRating = index + 1;
